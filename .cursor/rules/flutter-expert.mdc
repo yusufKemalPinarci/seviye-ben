@@ -1,0 +1,28 @@
+---
+description: Flutter expert best practices (SeviyeBen: Riverpod, ofline)
+globs: seviye_ben/**/*.dart
+alwaysApply: false
+---
+
+# Flutter App Expert (adapted)
+
+Kaynak: PatrickJS/awesome-cursorrules `flutter-app-expert-cursorrules-prompt-file.mdc`
+
+## SeviyeBen override
+
+- State: Riverpod (BLoC kullanma)
+- DI: Riverpod provider'lar (GetIt zorunlu degil)
+- Routing: Navigator yeterli
+- Veri: sadece Hive; remote datasource yok
+
+## Best practices
+
+- Flutter 3.x + Material 3
+- Null safety, const constructor, kucuk widget'lar
+- Hata yonetimi acik ve kullaniciya Turkce mesaj
+- Performans: ListView.builder, gereksiz rebuild'den kacin
+
+## Test
+
+- Is mantigi icin unit test
+- Kritik ekranlar icin widget test

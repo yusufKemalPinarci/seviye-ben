@@ -1,0 +1,557 @@
+{
+  "habits": [
+    {
+      "id": "habit_yuru",
+      "title": "30 dk yürü veya spor yap",
+      "stat": "strength",
+      "xpReward": 10
+    },
+    {
+      "id": "habit_sinav",
+      "title": "45 dk ders / öğrenme",
+      "stat": "intellect",
+      "xpReward": 12
+    },
+    {
+      "id": "habit_uyu",
+      "title": "Gece 23:00 öncesi uyu",
+      "stat": "energy",
+      "xpReward": 10
+    },
+    {
+      "id": "habit_su",
+      "title": "8 bardak su iç",
+      "stat": "vitality",
+      "xpReward": 8
+    },
+    {
+      "id": "habit_mekik",
+      "title": "20 şınav veya mekik",
+      "stat": "strength",
+      "xpReward": 11
+    },
+    {
+      "id": "habit_kitap",
+      "title": "20 sayfa kitap oku",
+      "stat": "intellect",
+      "xpReward": 10
+    },
+    {
+      "id": "habit_ekran",
+      "title": "Yatmadan 30 dk ekransız kal",
+      "stat": "energy",
+      "xpReward": 12
+    },
+    {
+      "id": "habit_sebze",
+      "title": "Bir öğünde sebze ye",
+      "stat": "vitality",
+      "xpReward": 9
+    },
+    {
+      "id": "habit_merdiven",
+      "title": "10 kat merdiven çık",
+      "stat": "strength",
+      "xpReward": 10
+    },
+    {
+      "id": "habit_esneme",
+      "title": "10 dk esneme / mobilite",
+      "stat": "strength",
+      "xpReward": 9
+    },
+    {
+      "id": "habit_dil",
+      "title": "15 dk dil veya kod çalış",
+      "stat": "intellect",
+      "xpReward": 11
+    },
+    {
+      "id": "habit_plan",
+      "title": "Günün 3 işini yaz",
+      "stat": "intellect",
+      "xpReward": 8
+    },
+    {
+      "id": "habit_nefes",
+      "title": "5 dk nefes egzersizi",
+      "stat": "energy",
+      "xpReward": 8
+    },
+    {
+      "id": "habit_mola",
+      "title": "Öğlen 10 dk yürüyüş molası",
+      "stat": "energy",
+      "xpReward": 9
+    },
+    {
+      "id": "habit_kahvalti",
+      "title": "Düzgün kahvaltı yap",
+      "stat": "vitality",
+      "xpReward": 9
+    },
+    {
+      "id": "habit_seker",
+      "title": "Tatlıyı bugün atla",
+      "stat": "vitality",
+      "xpReward": 10
+    }
+  ],
+  "equipment": [
+    {
+      "id": "eq_bere",
+      "name": "Mahalle Beresi",
+      "slot": "head",
+      "requiredLevel": 1,
+      "stat": "energy",
+      "bonus": 1,
+      "setId": "set_gece",
+      "description": "Sabah rüzgârına karşı ilk zırhın."
+    },
+    {
+      "id": "eq_tisort",
+      "name": "Antrenman Tişörtü",
+      "slot": "body",
+      "requiredLevel": 1,
+      "stat": "strength",
+      "bonus": 1,
+      "setId": "set_asfalt",
+      "description": "Hareket etmek için bahanen bitti."
+    },
+    {
+      "id": "eq_spor_ayakkabi",
+      "name": "Asfalt Koşucuları",
+      "slot": "feet",
+      "requiredLevel": 2,
+      "stat": "strength",
+      "bonus": 2,
+      "setId": "set_asfalt",
+      "description": "Kaldırım senin pistin."
+    },
+    {
+      "id": "eq_kulaklik",
+      "name": "Odak Kulaklığı",
+      "slot": "accessory",
+      "requiredLevel": 2,
+      "stat": "intellect",
+      "bonus": 2,
+      "setId": "set_odak",
+      "description": "Dış ses kapalı, zihin açık."
+    },
+    {
+      "id": "eq_hoodie",
+      "name": "Gece Kapüşonu",
+      "slot": "body",
+      "requiredLevel": 3,
+      "stat": "energy",
+      "bonus": 2,
+      "setId": "set_gece",
+      "description": "Erken uykuya geçiş kıyafeti."
+    },
+    {
+      "id": "eq_matara",
+      "name": "Çelik Matara",
+      "slot": "accessory",
+      "requiredLevel": 3,
+      "stat": "vitality",
+      "bonus": 2,
+      "setId": "set_canli",
+      "description": "Susuzluk artık rakip değil."
+    },
+    {
+      "id": "eq_siperlik",
+      "name": "Güneş Siperliği",
+      "slot": "head",
+      "requiredLevel": 5,
+      "stat": "vitality",
+      "bonus": 3,
+      "setId": "set_canli",
+      "description": "Dışarı rutininin nişanı."
+    },
+    {
+      "id": "eq_sirt_cantasi",
+      "name": "Ders Çantası",
+      "slot": "body",
+      "requiredLevel": 5,
+      "stat": "intellect",
+      "bonus": 3,
+      "setId": "set_odak",
+      "description": "Kitaplar omzunda, seviye cebinde."
+    },
+    {
+      "id": "eq_trail",
+      "name": "Trail Bot",
+      "slot": "feet",
+      "requiredLevel": 8,
+      "stat": "strength",
+      "bonus": 4,
+      "setId": "set_asfalt",
+      "description": "Uzun mesafe, sert tempo."
+    },
+    {
+      "id": "eq_saat",
+      "name": "Rutin Saati",
+      "slot": "accessory",
+      "requiredLevel": 8,
+      "stat": "energy",
+      "bonus": 4,
+      "setId": "set_gece",
+      "description": "Zamanı sen yönetirsin."
+    },
+    {
+      "id": "eq_cizgi",
+      "name": "Şehir Bandanası",
+      "slot": "head",
+      "requiredLevel": 10,
+      "stat": "intellect",
+      "bonus": 5,
+      "setId": "set_odak",
+      "description": "Odak seviyesi: usta."
+    },
+    {
+      "id": "eq_mont",
+      "name": "Seviye Montu",
+      "slot": "body",
+      "requiredLevel": 12,
+      "stat": "vitality",
+      "bonus": 5,
+      "setId": "set_canli",
+      "description": "Sokakta görünür ol, vazgeçme."
+    }
+  ],
+  "equipment_sets": [
+    {
+      "id": "set_asfalt",
+      "name": "Asfalt Takımı",
+      "pieceIds": ["eq_tisort", "eq_spor_ayakkabi", "eq_trail"],
+      "tiers": [
+        { "pieces": 2, "stat": "strength", "bonus": 1 },
+        { "pieces": 3, "stat": "strength", "bonus": 2 }
+      ]
+    },
+    {
+      "id": "set_gece",
+      "name": "Gece Ritmi",
+      "pieceIds": ["eq_bere", "eq_hoodie", "eq_saat"],
+      "tiers": [
+        { "pieces": 2, "stat": "energy", "bonus": 1 },
+        { "pieces": 3, "stat": "energy", "bonus": 2 }
+      ]
+    },
+    {
+      "id": "set_odak",
+      "name": "Odak Seti",
+      "pieceIds": ["eq_kulaklik", "eq_sirt_cantasi", "eq_cizgi"],
+      "tiers": [
+        { "pieces": 2, "stat": "intellect", "bonus": 1 },
+        { "pieces": 3, "stat": "intellect", "bonus": 2 }
+      ]
+    },
+    {
+      "id": "set_canli",
+      "name": "Canlı Mahalle",
+      "pieceIds": ["eq_matara", "eq_siperlik", "eq_mont"],
+      "tiers": [
+        { "pieces": 2, "stat": "vitality", "bonus": 1 },
+        { "pieces": 3, "stat": "vitality", "bonus": 2 }
+      ]
+    }
+  ],
+  "level_messages": {
+    "2": "İlk adım atıldı. Sokak seni tanıdı.",
+    "3": "Çıraklık bitti sayılır. Mahalle seni fark etti.",
+    "5": "Rutinin oturuyor. Mahalle ligine hoş geldin.",
+    "7": "Haftalık ritim oturdu. Tempo artık senin.",
+    "8": "Tempo yakalandı. Asfalt artık senin ritminde.",
+    "10": "Çift haneli seviye! Artık sen örnek oluyorsun.",
+    "12": "Tam donanım hattındasın. Sokak seni kaptan sayıyor.",
+    "15": "Uzun soluklu disiplin. Seviye haritasında iz bıraktın.",
+    "18": "Alışkanlık artık kimliğin. Geri dönüş yok.",
+    "20": "Efsane tempo. SeviyeBen haritasında yıldızsın.",
+    "25": "Sen artık rota çizenlersin; başkaları seni takip eder.",
+    "30": "Sokak efsanesi. Bu seviye alışkanlıkla kazanılır."
+  },
+  "daily_quests": [
+    {
+      "id": "dq_uc_rutin",
+      "title": "Üçlü kombo",
+      "description": "Bugün en az 3 rutin bitir.",
+      "targetCount": 3,
+      "bonusXp": 25
+    },
+    {
+      "id": "dq_guc_gunu",
+      "title": "Güç günü",
+      "description": "Bugün en az 3 rutin bitir, sokak ısınsın.",
+      "targetCount": 3,
+      "bonusXp": 25
+    },
+    {
+      "id": "dq_zeka_vardiyasi",
+      "title": "Zeka vardiyası",
+      "description": "Bugün 3 rutin tamamla, kafa net kalsın.",
+      "targetCount": 3,
+      "bonusXp": 28
+    },
+    {
+      "id": "dq_tempo",
+      "title": "Tempo tut",
+      "description": "En az 3 alışkanlığı bugün kapat.",
+      "targetCount": 3,
+      "bonusXp": 25
+    },
+    {
+      "id": "dq_dortlu",
+      "title": "Dörtlü meydan okuma",
+      "description": "Bugün 4 rutin bitir, ekstra ödül kap.",
+      "targetCount": 4,
+      "bonusXp": 40
+    },
+    {
+      "id": "dq_sabahci",
+      "title": "Disiplin turu",
+      "description": "3 rutin = günlük görev tamam.",
+      "targetCount": 3,
+      "bonusXp": 25
+    },
+    {
+      "id": "dq_gece",
+      "title": "Gece nöbeti",
+      "description": "Bugün 3 rutin; uyku da sayılır.",
+      "targetCount": 3,
+      "bonusXp": 30
+    }
+  ],
+  "street_lines": [
+    "Asfalt ısındı. İlk rutini sen kapat.",
+    "Mahalle seni izliyor — küçük adım, büyük tempo.",
+    "Su, uyku, hareket: bugünün üçlüsü.",
+    "Seriyi kırma; sokak unutmaz.",
+    "Bir sayfa, bir tur, bir bardak — yeter.",
+    "Gece erken yat, sabah net kalk.",
+    "Bugün güç günü. Vücut hatırlar.",
+    "Zeka vardiyası: 20 dakika odak.",
+    "Can dolsun: yeşil bir şey ye.",
+    "Tempo düşse de durma; yarın toparlanır.",
+    "Alışkanlık görünmez zırhtır.",
+    "SeviyeBen haritasında bir nokta daha.",
+    "Kimse bakmasa da bitir; kendin için.",
+    "Yağmur yağsa da yürüyüş sayılır."
+  ],
+  "weekly_challenges": [
+    {
+      "id": "wq_yedi",
+      "title": "Yedi gün tempo",
+      "description": "Bu hafta 7 gün en az bir rutin bitir.",
+      "targetDays": 7,
+      "bonusXp": 80
+    },
+    {
+      "id": "wq_sokak",
+      "title": "Sokak maratonu",
+      "description": "Haftanın her günü aktif kal.",
+      "targetDays": 7,
+      "bonusXp": 85
+    },
+    {
+      "id": "wq_mahalle",
+      "title": "Mahalle ligi",
+      "description": "7 gün rutin — haftalık efsane.",
+      "targetDays": 7,
+      "bonusXp": 75
+    }
+  ],
+  "titles": [
+    { "minLevel": 1, "title": "Çaylak Gezgin" },
+    { "minLevel": 3, "title": "Sokak Çırağı" },
+    { "minLevel": 5, "title": "Rutin Avcısı" },
+    { "minLevel": 7, "title": "Kaldırım Koşucusu" },
+    { "minLevel": 8, "title": "Tempo Ustası" },
+    { "minLevel": 10, "title": "Mahalle Efsanesi" },
+    { "minLevel": 12, "title": "Asfalt Kaptanı" },
+    { "minLevel": 15, "title": "Seviye Efsanesi" },
+    { "minLevel": 18, "title": "Sokak Mirası" },
+    { "minLevel": 20, "title": "Çizgi Efsanesi" },
+    { "minLevel": 22, "title": "Rota Ustası" },
+    { "minLevel": 25, "title": "Harita Ustası" },
+    { "minLevel": 30, "title": "Sokak Efsanesi" }
+  ],
+  "achievements": [
+    {
+      "id": "ach_ilk_rutin",
+      "title": "İlk ritim",
+      "description": "İlk rutini bitir.",
+      "kind": "any_habit",
+      "target": 1,
+      "bonusXp": 5
+    },
+    {
+      "id": "ach_seviye_3",
+      "title": "Adım attın",
+      "description": "Seviye 3’e ulaş.",
+      "kind": "level",
+      "target": 3,
+      "bonusXp": 10
+    },
+    {
+      "id": "ach_seviye_5",
+      "title": "Mahalle ligi",
+      "description": "Seviye 5’e ulaş.",
+      "kind": "level",
+      "target": 5,
+      "bonusXp": 15
+    },
+    {
+      "id": "ach_seviye_8",
+      "title": "Tempo yükseliyor",
+      "description": "Seviye 8’e ulaş.",
+      "kind": "level",
+      "target": 8,
+      "bonusXp": 18
+    },
+    {
+      "id": "ach_seviye_10",
+      "title": "Çift hane",
+      "description": "Seviye 10’a ulaş.",
+      "kind": "level",
+      "target": 10,
+      "bonusXp": 25
+    },
+    {
+      "id": "ach_seviye_15",
+      "title": "Sokak ustası",
+      "description": "Seviye 15’e ulaş.",
+      "kind": "level",
+      "target": 15,
+      "bonusXp": 30
+    },
+    {
+      "id": "ach_seviye_20",
+      "title": "Efsane çizgi",
+      "description": "Seviye 20’ye ulaş.",
+      "kind": "level",
+      "target": 20,
+      "bonusXp": 30
+    },
+    {
+      "id": "ach_seri_3",
+      "title": "Üç gün ateş",
+      "description": "3 gün üst üste aktif kal.",
+      "kind": "day_streak",
+      "target": 3,
+      "bonusXp": 10
+    },
+    {
+      "id": "ach_seri_7",
+      "title": "Haftalık tempo",
+      "description": "7 gün üst üste aktif kal.",
+      "kind": "day_streak",
+      "target": 7,
+      "bonusXp": 20
+    },
+    {
+      "id": "ach_seri_14",
+      "title": "İki hafta çelik",
+      "description": "14 gün üst üste aktif kal.",
+      "kind": "day_streak",
+      "target": 14,
+      "bonusXp": 28
+    },
+    {
+      "id": "ach_rutin_seri_3",
+      "title": "Ritim tuttu",
+      "description": "Bir rutinde 3 gün seri yap.",
+      "kind": "habit_streak",
+      "target": 3,
+      "bonusXp": 10
+    },
+    {
+      "id": "ach_rutin_seri_5",
+      "title": "Seri makinesi",
+      "description": "Bir rutinde 5 gün seri yap.",
+      "kind": "habit_streak",
+      "target": 5,
+      "bonusXp": 15
+    },
+    {
+      "id": "ach_rutin_seri_10",
+      "title": "Onluk zincir",
+      "description": "Bir rutinde 10 gün seri yap.",
+      "kind": "habit_streak",
+      "target": 10,
+      "bonusXp": 25
+    },
+    {
+      "id": "ach_gunluk",
+      "title": "Görev avcısı",
+      "description": "İlk günlük görevi tamamla.",
+      "kind": "daily_quest",
+      "target": 1,
+      "bonusXp": 10
+    },
+    {
+      "id": "ach_haftalik",
+      "title": "Haftanın gezgini",
+      "description": "İlk haftalık meydanı tamamla.",
+      "kind": "weekly_challenge",
+      "target": 1,
+      "bonusXp": 20
+    },
+    {
+      "id": "ach_koleksiyon_4",
+      "title": "Dört parça",
+      "description": "4 ekipman aç.",
+      "kind": "unlock_count",
+      "target": 4,
+      "bonusXp": 12
+    },
+    {
+      "id": "ach_koleksiyon_8",
+      "title": "Dolap doluyor",
+      "description": "8 ekipman aç.",
+      "kind": "unlock_count",
+      "target": 8,
+      "bonusXp": 18
+    },
+    {
+      "id": "ach_koleksiyon_12",
+      "title": "Tam gardırop",
+      "description": "12 ekipman aç.",
+      "kind": "unlock_count",
+      "target": 12,
+      "bonusXp": 25
+    },
+    {
+      "id": "ach_envanter_10",
+      "title": "Onlu rutin",
+      "description": "En az 10 alışkanlık tut.",
+      "kind": "habit_count",
+      "target": 10,
+      "bonusXp": 12
+    },
+    {
+      "id": "ach_envanter_16",
+      "title": "Rutin koleksiyonu",
+      "description": "En az 16 alışkanlık tut.",
+      "kind": "habit_count",
+      "target": 16,
+      "bonusXp": 20
+    },
+    {
+      "id": "ach_xp_100",
+      "title": "Yüzlük bar",
+      "description": "Toplam 100 XP kazan.",
+      "kind": "xp_total",
+      "target": 100,
+      "bonusXp": 10
+    },
+    {
+      "id": "ach_xp_500",
+      "title": "Beş yüzlük",
+      "description": "Toplam 500 XP kazan.",
+      "kind": "xp_total",
+      "target": 500,
+      "bonusXp": 25
+    }
+  ]
+}

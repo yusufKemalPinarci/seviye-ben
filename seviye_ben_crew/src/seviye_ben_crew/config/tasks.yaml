@@ -1,0 +1,42 @@
+design_economy_task:
+  description: >
+    SeviyeBen için ofline RPG alışkanlık ekonomisini tasarla.
+    Konu odağı: {topic}
+    Yıl: {current_year}
+
+    Şunları netleştir:
+    1) Alışkanlık tamamlanınca XP formülü
+    2) Seviye eşikleri (1–20)
+    3) Streak bonus kuralları
+    4) Dört istatistik: güç (spor), zeka (ders), enerji (uyku), can (su)
+    5) Basit ekipman slotları (baş, gövde, ayak, aksesuar)
+    Habitica isim/mekanik kopyalama. Çıktı Flutter'a gömülebilecek
+    kadar somut olsun.
+  expected_output: >
+    Markdown: ekonomi kuralları, tablolar (seviye→XP, istatistik etkileri),
+    ekipman listesi taslağı. Türkçe.
+  agent: game_designer
+
+write_content_task:
+  description: >
+    Önceki ekonomi tasarımına dayanarak SeviyeBen başlangıç içeriğini yaz.
+    - 8 varsayılan alışkanlık (spor/ders/uyku/su dengeli)
+    - 12 ekipman (isim, slot, gereken seviye, kısa açıklama)
+    - Seviye atlama kutlama mesajları (seviye 2,5,10,20)
+    Dil: Türkçe, sokak seviye atlama teması. Online özellik yok.
+  expected_output: >
+    Markdown + kopyalanabilir JSON blokları (habits, equipment, level_messages).
+    Habitica marka/karakter yok.
+  agent: content_writer
+
+flutter_plan_task:
+  description: >
+    Üretilen ekonomi ve içeriği `seviye_ben` Flutter projesine nasıl
+    gömeceğimizi planla. Zorunlu stack: Riverpod, Hive, MVVM.
+    Klasör yapısı, model alanları, ilk ekranlar (Ana, Alışkanlıklar,
+    Karakter, Envanter). API/auth önerme.
+  expected_output: >
+    Uygulama planı markdown: dosya listesi, model şemaları, ekran akışı,
+    Hive box isimleri. Kısa ve uygulanabilir.
+  agent: flutter_architect
+  output_file: output/seviye_ben_plan.md

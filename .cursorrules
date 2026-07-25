@@ -1,0 +1,9 @@
+# SeviyeBen — proje ozeti (Cursor)
+
+- Uygulama: `seviye_ben/` (Flutter, ofline RPG aliskanlik)
+- Crew ciktilari: `seviye_ben_crew/output/`
+- Kurallar: `.cursor/rules/` (her sprintte Crew ritüeli zorunlu)
+- **Ilerleme / yeni chat:** `docs/PROGRESS.md`
+- **Tam urun plani:** `docs/ROADMAP.md`
+
+Detay: `README.md`
