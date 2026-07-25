@@ -1,0 +1,5 @@
+SeviyeBen: Türkiye'de gençler için ofline RPG alışkanlık uygulaması.
+Tema: sokak seviye atlama. İstatistikler: güç, zeka, enerji, can.
+Stack: Flutter + Riverpod + Hive. İnternet yok, hesap yok.
+Habitica klonu değil; orijinal isim/tema/içerik.
+CrewAI çıktıları uygulamaya gömülür; runtime'da AI çağrısı yok.

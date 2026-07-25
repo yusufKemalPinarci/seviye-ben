@@ -1,0 +1,33 @@
+# SeviyeBen
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.pub-cache/
+.pub/
+**/doc/api/
+*.iml
+.idea/
+.vscode/
+*.log
+
+# CrewAI / Python
+**/__pycache__/
+**/.venv/
+**/venv/
+**/.env
+seviye_ben_crew/output/
+*.pyc
+.Python
+dist/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Android imza (asla commit etme)
+**/key.properties
+**/*.jks
+**/*.keystore

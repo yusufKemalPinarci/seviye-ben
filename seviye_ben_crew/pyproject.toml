@@ -1,0 +1,26 @@
+[project]
+name = "seviye_ben_crew"
+version = "0.1.0"
+description = "SeviyeBen içerik ve planlama ekibi (CrewAI)"
+authors = [{ name = "SeviyeBen", email = "dev@seviyeben.local" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=1.14.0,<2.0.0",
+]
+
+[project.scripts]
+seviye_ben_crew = "seviye_ben_crew.main:run"
+run_crew = "seviye_ben_crew.main:run"
+train = "seviye_ben_crew.main:train"
+replay = "seviye_ben_crew.main:replay"
+test = "seviye_ben_crew.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+
+[tool.uv]
+prerelease = "allow"

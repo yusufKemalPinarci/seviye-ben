@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SeviyeBen — Gizlilik Politikası</title>
+  <meta name="description" content="SeviyeBen gizlilik politikası. Tamamen ofline; sunucuya veri gitmez." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #1a1612;
+      --bg1: #2a2218;
+      --ink: #f3ebe0;
+      --muted: #c4b5a0;
+      --accent: #e8a317;
+      --line: rgba(243, 235, 224, 0.14);
+      --max: 40rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Source Sans 3", system-ui, sans-serif;
+      line-height: 1.55;
+      background:
+        radial-gradient(ellipse 90% 50% at 10% -10%, #3d2e18 0%, transparent 55%),
+        linear-gradient(165deg, var(--bg0), var(--bg1) 55%, #12100e);
+    }
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 3rem 1.25rem 4rem;
+    }
+    .brand {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: clamp(2.75rem, 10vw, 4rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      margin: 0 0 0.35rem;
+      color: var(--accent);
+    }
+    h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0 0 0.75rem;
+    }
+    .lead {
+      color: var(--muted);
+      margin: 0 0 1.75rem;
+      font-size: 1.05rem;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 0.75rem 0;
+      margin-bottom: 1.75rem;
+    }
+    h2 {
+      font-size: 1.05rem;
+      margin: 1.6rem 0 0.45rem;
+      color: var(--accent);
+    }
+    p, li { margin: 0 0 0.65rem; }
+    ul { padding-left: 1.2rem; margin: 0 0 0.75rem; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="brand">SeviyeBen</p>
+    <h1>Gizlilik Politikası</h1>
+    <p class="lead">
+      SeviyeBen tamamen ofline çalışır. Sunucuya veri göndermez, hesap istemez.
+    </p>
+    <p class="meta">Son güncelleme: 24 Temmuz 2026</p>
+
+    <h2>Kimiz</h2>
+    <p>
+      SeviyeBen, alışkanlıklarını sokak temalı bir seviye atlama oyununa çeviren
+      bir mobil uygulamadır. İnternet ve bulut hesabı olmadan çalışır.
+    </p>
+
+    <h2>Toplanan veriler</h2>
+    <p>
+      Uygulama <strong>kişisel veri toplamaz</strong> ve
+      <strong>sunucuya veri göndermez</strong>.
+    </p>
+    <p>Cihazda saklanan bilgiler (yalnızca senin telefonunda):</p>
+    <ul>
+      <li>Karakter ismi</li>
+      <li>XP, seviye, istatistikler, seri</li>
+      <li>Alışkanlıklar, envanter, başarımlar</li>
+      <li>Yerel ayarlar (ses, titreşim, görünüm)</li>
+    </ul>
+    <p>
+      Bu veriler Hive ile yerel depolanır; hesap veya bulut senkronu yoktur.
+      İsteğe bağlı yedek dosyası yalnızca sen paylaştığında cihazından dışarı çıkar.
+    </p>
+
+    <h2>İnternet</h2>
+    <p>
+      Release sürümünde uygulama işlevi için internet gerekmez.
+      Geliştirme (debug) derlemelerinde Flutter araçları için internet izni bulunabilir.
+    </p>
+
+    <h2>Üçüncü taraflar</h2>
+    <p>Reklam, analitik veya kimlik SDK’sı kullanılmaz.</p>
+
+    <h2>Çocuklar</h2>
+    <p>
+      Uygulama genel kitleye yöneliktir; 13 yaş altı için özel veri işlemi yapılmaz
+      (sunucu tarafı işlem yoktur).
+    </p>
+
+    <h2>Hakların</h2>
+    <p>
+      Veriler yalnızca cihazındadır. Uygulamayı kaldırarak veya uygulama verilerini
+      silerek tüm yerel ilerlemeyi silebilirsin.
+    </p>
+
+    <h2>İletişim</h2>
+    <p>
+      Gizlilik soruları için Play Console’da listelenen yayıncı e-posta adresini kullan.
+    </p>
+
+    <h2>Değişiklikler</h2>
+    <p>
+      Bu politika güncellenirse uygulama sürümü / mağaza notları ile duyurulur.
+    </p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,62 @@
+---
+description: SeviyeBen urun, mimari ve Crew sprint ritüeli (her zaman)
+alwaysApply: true
+---
+
+# SeviyeBen
+
+Hayati RPG'ye ceviren ofline aliskanlik uygulamasi. Tema: sokak seviye atlama.
+Istatistikler: spor=guc, ders=zeka, uyku=enerji, su=can.
+
+## Degismez kararlar
+
+- Dil: uygulama UI Turkce
+- Tamamen ofline: internet, hesap, API yok
+- Stack: Flutter + Riverpod (MVVM) + Hive yerel depolama
+- Konum: mobil uygulama `seviye_ben/`, icerik ajanlari `seviye_ben_crew/`
+- Ilerleme: `docs/PROGRESS.md` · Tam plan: `docs/ROADMAP.md`
+- Habitica kopyasi degil: orijinal isim, tema, asset, metin
+- Telif: fikir serbest; isim/logo/sprite/kod kopyalama yasak
+
+## Crew ritüeli (HER gelistirme mesajinda zorunlu)
+
+Canli CrewAI / LLM API yok. Agent, uc rol gibi SIRAYLA ilerler:
+
+1. **game_designer** — kurallar/denge → `seviye_ben_crew/output/`
+2. **content_writer** — Turkce metin/JSON → ayni output + gerekirse `assets/content/`
+3. **flutter_architect** — plan + kod (`lib/` MVVM)
+
+Kurallar:
+- Bir mesajda / bir istekte **tek sprint** (PROGRESS "Sonraki sprint" 1. madde)
+- "Gelistir / siradaki" = ROADMAP'teki siradaki acik maddeyi Crew ritüeliyle bitir
+- Sprint sonunda `docs/PROGRESS.md` guncelle
+- Runtime'da CrewAI/HTTP yok; icerik gomulu JSON/asset
+
+## Mimari (zorunlu)
+
+```
+seviye_ben/lib/
+  models/
+  viewmodels/
+  views/screens/
+  views/widgets/
+  services/   # sadece yerel (Hive); HTTP yok
+  utils/
+  main.dart
+```
+
+- BLoC / GetIt / GoRouter zorunlu degil; Riverpod + Navigator yeterli
+- `flutter-mvvm-riverpod` kurallarini esas al
+
+## Oyun dengesi (MVP)
+
+- Aliskanlik tamamla -> XP
+- XP dolunca seviye +1
+- Seviye ile ekipman / istatistik acilir
+- Streak: ardışık gun bonus XP
+
+## Kod stili
+
+- Dart satir uzunlugu ~100; 80 zorunlu degil
+- Gereksiz yorum yazma; self-documenting kod
+- Yeni bagimlilik eklemeden once ofline uyumlulugunu dogrula
