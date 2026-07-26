@@ -16,6 +16,7 @@ void main() {
             equipped: {
               EquipSlot.head: null,
               EquipSlot.body: null,
+              EquipSlot.back: null,
               EquipSlot.feet: null,
               EquipSlot.accessory: null,
             },

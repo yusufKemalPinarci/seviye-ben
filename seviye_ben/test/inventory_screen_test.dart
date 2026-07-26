@@ -61,10 +61,7 @@ void main() {
     expect(find.byType(AvatarSceneFrame), findsOneWidget);
     expect(find.byType(AnimatedCharacterAvatar), findsOneWidget);
     expect(find.byType(CharacterAvatar), findsOneWidget);
-    expect(
-      find.text('Giydiğin parçalar anında burada görünür.'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('Üzerinde'), findsOneWidget);
     expect(find.text('Envanter'), findsOneWidget);
   });
 }

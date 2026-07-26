@@ -1,145 +1,41 @@
-# SeviyeBen — İlerleme / Handoff
+# SeviyeBen — İlerleme
 
-
-
-> Yeni chat: **önce bu dosya** + `docs/ROADMAP.md` + `.cursor/rules/seviye-ben.mdc`.  
-
-> Uzun sohbet geçmişi gerekmez.
-
-
+> Yeni chat: bu dosya + skill `.cursor/skills/seviye-ben-sprint/`
 
 ## Ürün
 
-- **İsim:** SeviyeBen — ofline RPG alışkanlık (sokak seviye atlama)
+SeviyeBen — ofline RPG alışkanlık (Flutter + Riverpod + Hive · UI Türkçe · internet yok)
 
-- **Stack:** Flutter + Riverpod (MVVM) + Hive · UI Türkçe · internet/hesap YOK
+## Sprint
 
-- **Klasörler:** `seviye_ben/` · `seviye_ben_crew/` · `.cursor/rules/` · `docs/`
+1. Aşağıda **Sonraki sprint** 1. madde
+2. Skill sırası: düşün → gerekirse asset → `seviye_ben/lib/` → bu dosyayı güncelle
 
-
-
-## Crew ritüeli (her mesaj / her sprint)
-
-1. `docs/PROGRESS.md` → **Sonraki sprint** 1. maddeyi al (tek iş)
-
-2. **Tasarla** (`*_ekonomi.md`) → **İçerik** (`*_icerik.*`) → **Kod** (`*_plan.md` + lib)
-
-3. Canlı CrewAI / API **yok**; çıktı: `seviye_ben_crew/output/`
-
-4. Sprint bitince bu dosyayı güncelle; sıradaki = ROADMAP’te bir sonraki açık madde
-
-
-
-Detaylı fazlar: [`docs/ROADMAP.md`](ROADMAP.md)
-
-
+Yol haritası (referans): [`ROADMAP.md`](ROADMAP.md)
 
 ---
 
+## Tamamlanan
 
+Çekirdek + B–E + F1–F3 + AAB ✓  
+Ekipman slot/görünürlük ✓  
+**Oyun HUD / ilerleme UI** ✓ (XP bar, görev kartları, istatistik pill)
 
-## Bugüne kadar özet (Sprint 1–31)
+## Sonraki sprint
 
-
-
-| Alan | Durum |
-
-|------|--------|
-
-| Çekirdek + Faz B + C + D + E + F1–F2 | ✓ |
-
-| **F3 Ekran görüntüleri (4× telefon)** | ✓ Sprint 31 |
-
-| AAB (release imza) | ✓ |
-
-
-
----
-
-
-
-## Önemli dosyalar
-
-| Dosya | Rol |
-
-|-------|-----|
-
-| `docs/store/screenshots/*.jpg` | Play telefon görselleri (1080×1920) |
-
-| `docs/store/screenshots/render_shots.py` | Görselleri yeniden üret |
-
-| `docs/privacy/index.html` | Host edilecek gizlilik sayfası |
-
-| `docs/PLAY_STORE.md` | mağaza checklist |
-
-
+1. **F4 — Dahili / kapalı test → üretim**
+2. F5 — (İsteğe bağlı) iOS App Store paket
 
 ## Çalıştırma
 
 ```bash
-
-cd seviye_ben
-
-flutter pub get && flutter test && flutter run
-
-flutter build appbundle --release
-
+cd seviye_ben && flutter pub get && flutter test && flutter run
 ```
 
-
-
----
-
-
-
-## Sonraki sprint (öncelik — ROADMAP Faz F)
-
-1. **F4 — Dahili / kapalı test → üretim**
-
-2. F5 — (İsteğe bağlı) iOS App Store paket
-
-
-
----
-
-
-
-## Yeni chat’e yapıştır
+## Yeni chat
 
 ```
-
-SeviyeBen Flutter ofline RPG alışkanlık app.
-
-Önce docs/PROGRESS.md, docs/ROADMAP.md ve .cursor/rules/seviye-ben.mdc oku.
-
-Her işte Crew ritüeli: tasarla → içerik → kod (API yok; CrewAI canlı koşturma).
-
-Tek sprint: PROGRESS.md "Sonraki sprint" 1. madde.
-
-Bitince PROGRESS.md güncelle.
-
-
-
-## Bu chatte bitenler
-
-- F3: docs/store/screenshots 01–04 JPEG
-
-
-
-## Sıradaki (PROGRESS 1. madde)
-
-F4 — Dahili / kapalı test → üretim.
-
-
-
-Crew output son numaralar: ~87–89 sprint31. Yeni sprint 32 → 90/91/92.
-
+SeviyeBen. docs/PROGRESS.md + .cursor/skills/seviye-ben-sprint/ oku.
+Tek sprint: Sonraki sprint 1. madde. Bitince PROGRESS güncelle.
+Sıradaki: F4 — Dahili / kapalı test → üretim.
 ```
-
-
-
-## Güncelleme kuralı
-
-Her sprint bitince: tamamlananlara ekle + Sonraki sprint listesini kaydır.
-
-

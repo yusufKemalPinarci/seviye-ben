@@ -43,7 +43,7 @@ void main() {
 
     expect(find.text('SeviyeBen'), findsWidgets);
     expect(find.text('Sokak notu'), findsOneWidget);
-    expect(find.text('Bugünün rutinleri'), findsOneWidget);
+    expect(find.text('Bugünün görevleri'), findsOneWidget);
     expect(find.textContaining('Günlük görev'), findsOneWidget);
   });
 }

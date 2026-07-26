@@ -1,42 +1,53 @@
 design_economy_task:
   description: >
-    SeviyeBen için ofline RPG alışkanlık ekonomisini tasarla.
-    Konu odağı: {topic}
-    Yıl: {current_year}
+    SeviyeBen sprint tasarımı. API / canlı servis yok.
 
-    Şunları netleştir:
-    1) Alışkanlık tamamlanınca XP formülü
-    2) Seviye eşikleri (1–20)
-    3) Streak bonus kuralları
-    4) Dört istatistik: güç (spor), zeka (ders), enerji (uyku), can (su)
-    5) Basit ekipman slotları (baş, gövde, ayak, aksesuar)
-    Habitica isim/mekanik kopyalama. Çıktı Flutter'a gömülebilecek
-    kadar somut olsun.
+    Sprint: {sprint_id} ({sprint_code})
+    Konu: {topic}
+    Yıl: {current_year}
+    Kabul (ROADMAP): {acceptance}
+
+    Şunları netleştir (yalnızca bu sprint için):
+    1) Oyun / ürün kuralları ve denge sayıları
+    2) Mevcut ekonomiyle uyum veya migration notu
+    3) Edge case’ler
+    4) Kod’a kısa not (hangi alanlar etkilenir)
+
+    Habitica isim/mekanik kopyalama. Online özellik önerme.
+    Çıktı Flutter’a gömülebilecek kadar somut olsun. Türkçe.
   expected_output: >
-    Markdown: ekonomi kuralları, tablolar (seviye→XP, istatistik etkileri),
-    ekipman listesi taslağı. Türkçe.
+    Markdown ekonomi/tasarım: hedef, kurallar, tablolar, edge case,
+    kabul checklist, kod’a not. Dosya adı ipucu: {output_ekonomi}
   agent: game_designer
+  output_file: output/{output_ekonomi}
 
 write_content_task:
   description: >
-    Önceki ekonomi tasarımına dayanarak SeviyeBen başlangıç içeriğini yaz.
-    - 8 varsayılan alışkanlık (spor/ders/uyku/su dengeli)
-    - 12 ekipman (isim, slot, gereken seviye, kısa açıklama)
-    - Seviye atlama kutlama mesajları (seviye 2,5,10,20)
+    Önceki ekonomi/tasarım çıktısına dayanarak sprint {sprint_id}
+    ({sprint_code}) içeriğini yaz. Konu: {topic}.
+
+    - Kullanıcıya görünen tüm UI metinleri (Türkçe)
+    - Gerekirse kopyalanabilir JSON blokları
+    - Asset yolu önerisi (seviye_ben/assets/content/...)
+
     Dil: Türkçe, sokak seviye atlama teması. Online özellik yok.
-  expected_output: >
-    Markdown + kopyalanabilir JSON blokları (habits, equipment, level_messages).
     Habitica marka/karakter yok.
+  expected_output: >
+    Markdown içerik + gerekirse JSON. Dosya: {output_icerik}
   agent: content_writer
+  output_file: output/{output_icerik}
 
 flutter_plan_task:
   description: >
     Üretilen ekonomi ve içeriği `seviye_ben` Flutter projesine nasıl
-    gömeceğimizi planla. Zorunlu stack: Riverpod, Hive, MVVM.
-    Klasör yapısı, model alanları, ilk ekranlar (Ana, Alışkanlıklar,
-    Karakter, Envanter). API/auth önerme.
+    gömeceğimizi planla. Sprint {sprint_id} ({sprint_code}).
+    Konu: {topic}. Kabul: {acceptance}.
+
+    Zorunlu stack: Riverpod, Hive, MVVM.
+    Klasör: models / viewmodels / views/screens / views/widgets / services / utils.
+    API/auth önerme. Tek sprintte uygulanabilir dosya listesi ver.
   expected_output: >
-    Uygulama planı markdown: dosya listesi, model şemaları, ekran akışı,
-    Hive box isimleri. Kısa ve uygulanabilir.
+    Uygulama planı markdown: dosya listesi, model/state, UI akışı,
+    test, uygulama sırası. Dosya: {output_plan}
   agent: flutter_architect
-  output_file: output/seviye_ben_plan.md
+  output_file: output/{output_plan}
