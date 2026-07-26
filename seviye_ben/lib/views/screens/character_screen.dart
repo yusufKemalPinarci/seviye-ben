@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/achievement.dart';
 import '../../models/equipment.dart';
 import '../../models/stat_type.dart';
+import '../../utils/app_theme.dart';
 import '../../utils/equipment_look.dart';
 import '../../utils/game_balance.dart';
 import '../../viewmodels/game_notifier.dart';
@@ -11,6 +12,7 @@ import '../widgets/achievement_badge_row.dart';
 import '../widgets/animated_character_avatar.dart';
 import '../widgets/avatar_scene_frame.dart';
 import '../widgets/week_stats_chart.dart';
+import '../widgets/xp_bar.dart';
 
 class CharacterScreen extends ConsumerWidget {
   const CharacterScreen({super.key});
@@ -85,27 +87,52 @@ class CharacterScreen extends ConsumerWidget {
             game.player.name,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w800,
                 ),
           ),
-          Text(
-            game.title,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            'Seviye ${game.level} · ${game.player.xp} XP'
-            '${game.player.dayStreak > 0 ? ' · ${game.player.dayStreak} gün seri' : ''}',
-            textAlign: TextAlign.center,
+          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppTheme.xpGold.withValues(alpha: 0.18),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppTheme.xpGold.withValues(alpha: 0.5)),
+            ),
+            child: Text(
+              game.title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w800,
+                color: AppTheme.street,
+              ),
+            ),
           ),
           const SizedBox(height: 8),
-          LinearProgressIndicator(
-            value: xpNeed == 0 ? 1 : (xpIn / xpNeed).clamp(0.0, 1.0),
-            minHeight: 10,
+          Text(
+            'Seviye ${game.level}'
+            '${game.player.dayStreak > 0 ? ' · ${game.player.dayStreak} gün seri' : ''}',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 10),
+          XpBar(
+            progress: xpNeed == 0 ? 1 : (xpIn / xpNeed).clamp(0.0, 1.0),
+            label: 'Seviye ilerlemesi',
+            trailing: '$xpIn / $xpNeed XP',
+            height: 12,
+            color: AppTheme.xpGold,
           ),
           const SizedBox(height: 20),
           Text(
-            'İstatistikler (taban + ekipman)',
-            style: Theme.of(context).textTheme.titleMedium,
+            'İstatistikler',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+          ),
+          Text(
+            'Taban + ekipman = güçlenme',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppTheme.onSurfaceMuted,
+                ),
           ),
           const SizedBox(height: 8),
           ...StatType.values.map((stat) {
@@ -118,34 +145,45 @@ class CharacterScreen extends ConsumerWidget {
             final bonus = game.bonusFor(stat);
             final total = base + bonus;
             final bar = (total / 40).clamp(0.05, 1.0);
+            final color = AppTheme.statColor(stat);
             return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(child: Text(stat.labelTr)),
-                      Text(
-                        bonus > 0 ? '$base +$bonus = $total' : '$base',
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: LinearProgressIndicator(
-                      value: bar,
-                      minHeight: 6,
-                      color: Theme.of(context).colorScheme.secondary,
-                      backgroundColor: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: 0.15),
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: AppTheme.gamePanel(
+                  borderColor: color.withValues(alpha: 0.35),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(AppTheme.statIcon(stat), size: 18, color: color),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            stat.labelTr,
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                        Text(
+                          bonus > 0 ? '$base +$bonus = $total' : '$total',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            color: color,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    XpBar(
+                      progress: bar,
+                      height: 8,
+                      color: color,
+                      trackColor: color.withValues(alpha: 0.12),
+                    ),
+                  ],
+                ),
               ),
             );
           }),
@@ -277,6 +315,8 @@ class CharacterScreen extends ConsumerWidget {
         return Icons.face;
       case EquipSlot.body:
         return Icons.checkroom;
+      case EquipSlot.back:
+        return Icons.backpack;
       case EquipSlot.feet:
         return Icons.directions_walk;
       case EquipSlot.accessory:

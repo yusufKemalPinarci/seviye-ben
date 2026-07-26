@@ -1,6 +1,6 @@
 import 'stat_type.dart';
 
-enum EquipSlot { head, body, feet, accessory }
+enum EquipSlot { head, body, back, feet, accessory }
 
 extension EquipSlotLabel on EquipSlot {
   String get labelTr {
@@ -9,6 +9,8 @@ extension EquipSlotLabel on EquipSlot {
         return 'Baş';
       case EquipSlot.body:
         return 'Gövde';
+      case EquipSlot.back:
+        return 'Sırt';
       case EquipSlot.feet:
         return 'Ayak';
       case EquipSlot.accessory:

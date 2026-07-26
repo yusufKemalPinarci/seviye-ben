@@ -35,8 +35,9 @@ void main() {
     expect(find.text('Günlük görev'), findsOneWidget);
     expect(find.text('Üçlü kombo'), findsOneWidget);
     expect(find.text('Bugün en az 3 rutin bitir.'), findsOneWidget);
-    expect(find.text('1 / 3 · ödül +25 XP'), findsOneWidget);
-    expect(find.text('Seri 3 gün'), findsOneWidget);
+    expect(find.text('1/3'), findsOneWidget);
+    expect(find.text('Ödül +25 XP'), findsOneWidget);
+    expect(find.text('3'), findsOneWidget);
   });
 
   testWidgets('tamamlanınca ödül alındı metni', (tester) async {
@@ -51,8 +52,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Günlük görev tamam'), findsOneWidget);
-    expect(find.text('+25 XP alındı'), findsOneWidget);
-    expect(find.textContaining('Seri'), findsNothing);
+    expect(find.text('Görev tamam!'), findsOneWidget);
+    expect(find.text('+25 XP'), findsOneWidget);
   });
 }

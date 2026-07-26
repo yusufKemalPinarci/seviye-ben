@@ -27,7 +27,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('SeviyeBen')),
+      appBar: AppBar(
+        title: const Text('SeviyeBen'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Center(
+              child: Text(
+                'SOKAK RPG',
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.7),
+                  fontSize: 11,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           const _HomeFeedbackListener(),
@@ -52,9 +70,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       const _HomeTodaySummary(),
                       const SizedBox(height: 20),
                       Text(
-                        'Bugünün rutinleri',
+                        'Bugünün görevleri',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.2,
                             ),
                       ),
                       const SizedBox(height: 8),
@@ -106,7 +125,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           }
         },
         icon: const Icon(Icons.add),
-        label: const Text('Alışkanlık'),
+        label: const Text('+ Görev'),
       ),
     );
   }
@@ -203,6 +222,9 @@ class _HomePlayerHeader extends ConsumerWidget {
           title: s.title,
           equipped: s.equippedBySlot,
           habitCompletePulse: s.habitCompletePulse,
+          gearBonuses: {
+            for (final st in StatType.values) st: s.bonusFor(st),
+          },
         ),
       ),
     );
@@ -216,6 +238,7 @@ class _HomePlayerHeader extends ConsumerWidget {
       xpInLevel: xpIn,
       xpNeeded: xpNeed,
       equipped: header.equipped,
+      gearBonuses: header.gearBonuses,
       habitCompletePulse: header.habitCompletePulse,
     );
   }

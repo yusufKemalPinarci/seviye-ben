@@ -128,6 +128,9 @@ class _AnimatedCharacterAvatarState extends State<AnimatedCharacterAvatar>
   @override
   Widget build(BuildContext context) {
     final avatar = CharacterAvatar(
+      key: ValueKey(
+        EquipSlot.values.map((s) => widget.equipped[s]?.id ?? '-').join('|'),
+      ),
       lookIndex: widget.lookIndex,
       level: widget.level,
       equipped: widget.equipped,

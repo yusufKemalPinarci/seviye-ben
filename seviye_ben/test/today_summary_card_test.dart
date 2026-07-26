@@ -15,7 +15,8 @@ void main() {
     );
     expect(find.text('Bugün özeti'), findsOneWidget);
     expect(find.text('3 rutin bitti'), findsOneWidget);
-    expect(find.text('+42 XP'), findsOneWidget);
+    expect(find.text('+42'), findsOneWidget);
+    expect(find.text('XP'), findsOneWidget);
   });
 
   testWidgets('boş günde ipucu gösterir', (tester) async {

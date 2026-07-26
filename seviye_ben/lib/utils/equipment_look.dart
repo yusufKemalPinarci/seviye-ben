@@ -65,13 +65,13 @@ Color equipmentColor(String? equipmentId, EquipSlot slot) {
     case 'eq_mont':
       return const Color(0xFF1F3A2E);
     case 'eq_spor_ayakkabi':
-      return const Color(0xFFE8E4DC);
+      return const Color(0xFFF5F0E6);
     case 'eq_trail':
-      return const Color(0xFF4A3728);
+      return const Color(0xFF6B4423);
     case 'eq_kulaklik':
-      return AppTheme.ink;
+      return const Color(0xFF111827);
     case 'eq_matara':
-      return const Color(0xFF7A8B99);
+      return const Color(0xFF5B8FA8);
     case 'eq_saat':
       return AppTheme.signal;
     default:
@@ -80,6 +80,8 @@ Color equipmentColor(String? equipmentId, EquipSlot slot) {
           return const Color(0xFF6B5B4B);
         case EquipSlot.body:
           return AppTheme.street;
+        case EquipSlot.back:
+          return const Color(0xFF8B6914);
         case EquipSlot.feet:
           return const Color(0xFF3A3A3A);
         case EquipSlot.accessory:

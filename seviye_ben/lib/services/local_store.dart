@@ -128,10 +128,27 @@ class LocalStore {
 
   static Map<String, String> loadEquipped() {
     final raw = Hive.box(_inventoryBox).get('equipped');
-    if (raw is Map) {
-      return raw.map((k, v) => MapEntry(k.toString(), v.toString()));
+    if (raw is! Map) {
+      return {};
     }
-    return {};
+    final map = raw.map((k, v) => MapEntry(k.toString(), v.toString()));
+    // Eski kayıt: çanta body'deydi → sırt slotuna taşı
+    if (map['body'] == 'eq_sirt_cantasi') {
+      map['back'] = 'eq_sirt_cantasi';
+      map.remove('body');
+    }
+    return map;
+  }
+
+  /// Hive'da hâlâ body→çanta varsa migrate edilmiş map'i yazar.
+  static Future<void> persistEquippedMigration(
+    Map<String, String> equipped,
+    List<String> unlocked,
+  ) async {
+    final raw = Hive.box(_inventoryBox).get('equipped');
+    if (raw is Map && raw['body'] == 'eq_sirt_cantasi') {
+      await saveInventory(unlocked: unlocked, equipped: equipped);
+    }
   }
 
   static Future<void> saveInventory({
