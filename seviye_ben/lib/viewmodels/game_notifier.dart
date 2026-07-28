@@ -204,6 +204,7 @@ class GameNotifier extends StateNotifier<GameState> {
         ) {
     SoundService.enabled = state.soundEnabled;
     HapticService.enabled = state.hapticEnabled;
+    LocalStore.persistEquippedMigration(state.equipped, state.unlockedIds);
   }
 
   void reloadFromStore() {

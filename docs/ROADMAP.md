@@ -3,16 +3,9 @@
 > Kaynak gerçek: `docs/PROGRESS.md` (hangi sprintteyiz).  
 > Bu dosya: oyunun **tam** olması için fazlar. Her Cursor mesajında **tek sprint** (1 madde).
 
-## Crew ritüeli (zorunlu — her sprint)
+## Sprint ritüeli
 
-API key yok; canlı CrewAI koşturma.
-
-1. **game_designer** → `seviye_ben_crew/output/NN_sprintX_ekonomi.md` (kurallar, denge)
-2. **content_writer** → `…_icerik.md` / JSON (Türkçe metin, orijinal)
-3. **flutter_architect** → `…_plan.md` + kod (`seviye_ben/lib/…`)
-4. Test / gerekirse APK · **`docs/PROGRESS.md` güncelle** (tamamlanan + sıradaki 1. madde)
-
-Tek mesajda birden fazla fazı bitirme; “sıradaki adım” = listede 1. madde.
+`docs/PROGRESS.md` + `.cursor/skills/seviye-ben-sprint/`. Tek mesajda tek sprint.
 
 ---
 
@@ -96,7 +89,7 @@ Tek mesajda birden fazla fazı bitirme; “sıradaki adım” = listede 1. madde
 
 - Online hesap, bulut sync, sosyal liderlik
 - Habitica asset / isim kopyası
-- Uygulama içi LLM / CrewAI runtime
+- Uygulama içi LLM / harici agent framework (CrewAI vb.)
 - Reklam / IAP (sonra ayrı karar)
 
 ---

@@ -8,6 +8,7 @@ import 'package:seviye_ben/views/widgets/character_avatar.dart';
 Map<EquipSlot, Equipment?> get _emptyEquipped => {
       EquipSlot.head: null,
       EquipSlot.body: null,
+      EquipSlot.back: null,
       EquipSlot.feet: null,
       EquipSlot.accessory: null,
     };

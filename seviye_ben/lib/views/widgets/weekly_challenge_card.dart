@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/weekly_challenge.dart';
 import '../../utils/app_theme.dart';
+import 'xp_bar.dart';
 
 class WeeklyChallengeCard extends StatelessWidget {
   const WeeklyChallengeCard({
@@ -21,43 +22,51 @@ class WeeklyChallengeCard extends StatelessWidget {
     final ratio = target == 0 ? 0.0 : (progressDays / target).clamp(0.0, 1.0);
     return Container(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: AppTheme.signal.withValues(alpha: 0.4),
-        ),
-        borderRadius: BorderRadius.circular(12),
-        color: Theme.of(context).colorScheme.surface,
+      decoration: AppTheme.gamePanel(
+        borderColor: AppTheme.xpGold.withValues(alpha: 0.45),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            done ? 'Haftalık meydan tamam' : 'Haftalık meydan',
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
+          Row(
+            children: [
+              const Icon(Icons.calendar_month, color: AppTheme.xpGold, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  done ? 'Haftalık meydan tamam' : 'Haftalık meydan',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                 ),
+              ),
+              Text(
+                done ? '✓' : '$progressDays/$target',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  color: AppTheme.xpGold,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
           Text(
             challenge.title,
-            style: const TextStyle(fontWeight: FontWeight.w600),
+            style: const TextStyle(fontWeight: FontWeight.w800),
           ),
-          Text(challenge.description),
-          const SizedBox(height: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: LinearProgressIndicator(
-              value: ratio,
-              minHeight: 8,
-              color: AppTheme.signal,
-            ),
-          ),
-          const SizedBox(height: 6),
           Text(
-            done
-                ? '+${challenge.bonusXp} XP alındı'
-                : '$progressDays / $target gün · ödül +${challenge.bonusXp} XP',
-            style: Theme.of(context).textTheme.bodySmall,
+            challenge.description,
+            style: const TextStyle(color: AppTheme.onSurfaceMuted),
+          ),
+          const SizedBox(height: 12),
+          XpBar(
+            progress: ratio,
+            height: 10,
+            color: AppTheme.xpGold,
+            trackColor: AppTheme.street.withValues(alpha: 0.12),
+            trailing: done
+                ? '+${challenge.bonusXp} XP'
+                : 'ödül +${challenge.bonusXp} XP',
           ),
         ],
       ),

@@ -9,8 +9,7 @@ void main() {
     name: 'Asfalt Takımı',
     pieceIds: ['eq_tisort', 'eq_spor_ayakkabi', 'eq_trail'],
     tiers: [
-      SetBonusTier(pieces: 2, stat: StatType.strength, bonus: 1),
-      SetBonusTier(pieces: 3, stat: StatType.strength, bonus: 2),
+      SetBonusTier(pieces: 2, stat: StatType.strength, bonus: 2),
     ],
   );
 
@@ -41,18 +40,13 @@ void main() {
     expect(setBonusForStat([set], eq, StatType.strength), 0);
   });
 
-  test('2 parça +1 güç', () {
+  test('2 parça +2 güç (ayakkabı çakışması yüzünden max 2)', () {
     final eq = wear(['eq_tisort', 'eq_spor_ayakkabi']);
-    expect(setBonusForStat([set], eq, StatType.strength), 1);
-  });
-
-  test('3 parça +2 güç', () {
-    final eq = wear(['eq_tisort', 'eq_spor_ayakkabi', 'eq_trail']);
     expect(setBonusForStat([set], eq, StatType.strength), 2);
   });
 
   test('yanlış stata 0', () {
-    final eq = wear(['eq_tisort', 'eq_spor_ayakkabi', 'eq_trail']);
+    final eq = wear(['eq_tisort', 'eq_spor_ayakkabi']);
     expect(setBonusForStat([set], eq, StatType.energy), 0);
   });
 }

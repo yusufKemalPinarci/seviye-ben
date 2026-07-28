@@ -5,7 +5,7 @@ from crewai.agents.agent_builder.base_agent import BaseAgent
 
 @CrewBase
 class SeviyeBenCrew:
-    """SeviyeBen içerik ve mimari planlama ekibi."""
+    """SeviyeBen sprint ekibi: tasarla → içerik → Flutter planı."""
 
     agents: list[BaseAgent]
     tasks: list[Task]
@@ -41,13 +41,14 @@ class SeviyeBenCrew:
     def write_content_task(self) -> Task:
         return Task(
             config=self.tasks_config['write_content_task'],  # type: ignore[index]
+            context=[self.design_economy_task()],
         )
 
     @task
     def flutter_plan_task(self) -> Task:
         return Task(
             config=self.tasks_config['flutter_plan_task'],  # type: ignore[index]
-            output_file='output/seviye_ben_plan.md',
+            context=[self.design_economy_task(), self.write_content_task()],
         )
 
     @crew

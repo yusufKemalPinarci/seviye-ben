@@ -171,12 +171,12 @@
     {
       "id": "eq_sirt_cantasi",
       "name": "Ders Çantası",
-      "slot": "body",
+      "slot": "back",
       "requiredLevel": 5,
       "stat": "intellect",
       "bonus": 3,
       "setId": "set_odak",
-      "description": "Kitaplar omzunda, seviye cebinde."
+      "description": "Kitaplar omzunda, seviye cebinde. Gövde kıyafetinin üstüne giyilir."
     },
     {
       "id": "eq_trail",
@@ -225,8 +225,7 @@
       "name": "Asfalt Takımı",
       "pieceIds": ["eq_tisort", "eq_spor_ayakkabi", "eq_trail"],
       "tiers": [
-        { "pieces": 2, "stat": "strength", "bonus": 1 },
-        { "pieces": 3, "stat": "strength", "bonus": 2 }
+        { "pieces": 2, "stat": "strength", "bonus": 2 }
       ]
     },
     {

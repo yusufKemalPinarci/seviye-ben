@@ -25,6 +25,7 @@ void main() {
       ),
     );
     expect(find.text('Haftalık meydan'), findsOneWidget);
-    expect(find.textContaining('3 / 7'), findsOneWidget);
+    expect(find.text('3/7'), findsOneWidget);
+    expect(find.textContaining('ödül +80 XP'), findsOneWidget);
   });
 }
