@@ -23,10 +23,32 @@ class HabitListSliver extends ConsumerWidget {
     final filtered = filterHabitsByStat(habits, statFilter);
 
     if (habits.isEmpty) {
-      return const SliverToBoxAdapter(
+      return SliverToBoxAdapter(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24),
-          child: Text('Henüz alışkanlık yok. Bir tane ekle.'),
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: Column(
+            children: [
+              Text(
+                'Henüz alışkanlık yok.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'İlk rutinini ekle; Bitir’e basınca XP ve seviye gelir.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 16),
+              FilledButton.icon(
+                onPressed: () => _addHabit(context, ref),
+                icon: const Icon(Icons.add),
+                label: const Text('Alışkanlık ekle'),
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -93,6 +115,17 @@ class HabitListSliver extends ConsumerWidget {
       await ref
           .read(gameProvider.notifier)
           .updateHabit(habit.id, result.title, result.stat);
+    }
+  }
+
+  Future<void> _addHabit(BuildContext context, WidgetRef ref) async {
+    final result = await showModalBottomSheet<({String title, StatType stat})>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => const HabitFormSheet(),
+    );
+    if (result != null) {
+      await ref.read(gameProvider.notifier).addHabit(result.title, result.stat);
     }
   }
 }

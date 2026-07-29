@@ -11,6 +11,8 @@ class SceneBackground {
     required this.skyTop,
     required this.skyBottom,
     required this.ground,
+    this.requiredLevel = 1,
+    this.requiredStreak = 0,
   });
 
   final int id;
@@ -20,6 +22,8 @@ class SceneBackground {
   final Color skyTop;
   final Color skyBottom;
   final Color ground;
+  final int requiredLevel;
+  final int requiredStreak;
 }
 
 const List<SceneBackground> sceneBackgrounds = [
@@ -31,6 +35,7 @@ const List<SceneBackground> sceneBackgrounds = [
     skyTop: Color(0xFFB8D4E8),
     skyBottom: Color(0xFFE8E4DC),
     ground: Color(0xFF5A5E66),
+    requiredLevel: 1,
   ),
   SceneBackground(
     id: 1,
@@ -40,6 +45,7 @@ const List<SceneBackground> sceneBackgrounds = [
     skyTop: Color(0xFF0D1526),
     skyBottom: Color(0xFF1A2740),
     ground: Color(0xFF12161F),
+    requiredLevel: 5,
   ),
   SceneBackground(
     id: 2,
@@ -49,8 +55,45 @@ const List<SceneBackground> sceneBackgrounds = [
     skyTop: Color(0xFF6B7A8A),
     skyBottom: Color(0xFF9AA8B4),
     ground: Color(0xFF3E4550),
+    requiredLevel: 8,
+  ),
+  SceneBackground(
+    id: 3,
+    key: 'dusk',
+    name: 'Akşam ışığı',
+    icon: Icons.wb_twilight,
+    skyTop: Color(0xFFE07A3D),
+    skyBottom: Color(0xFFF0C8A0),
+    ground: Color(0xFF4A3F3A),
+    requiredLevel: 12,
+  ),
+  SceneBackground(
+    id: 4,
+    key: 'neon',
+    name: 'Neon cadde',
+    icon: Icons.bolt,
+    skyTop: Color(0xFF12081F),
+    skyBottom: Color(0xFF2A1540),
+    ground: Color(0xFF1A1028),
+    requiredLevel: 15,
+    requiredStreak: 3,
   ),
 ];
+
+bool isSceneUnlocked(
+  SceneBackground scene, {
+  required int level,
+  required int dayStreak,
+}) {
+  return level >= scene.requiredLevel && dayStreak >= scene.requiredStreak;
+}
+
+String sceneUnlockHint(SceneBackground scene) {
+  if (scene.requiredStreak > 0) {
+    return 'Sv.${scene.requiredLevel} + ${scene.requiredStreak} gün seri';
+  }
+  return 'Sv.${scene.requiredLevel}’te açılır';
+}
 
 SceneBackground backgroundThemeFor(int index) {
   for (final s in sceneBackgrounds) {
@@ -66,6 +109,25 @@ int clampBackgroundTheme(int index) {
     return 0;
   }
   return index;
+}
+
+/// Kilitli tema seçiliyse açılmış ilk temaya düş.
+int resolveUsableBackgroundTheme({
+  required int themeIndex,
+  required int level,
+  required int dayStreak,
+}) {
+  final clamped = clampBackgroundTheme(themeIndex);
+  final current = backgroundThemeFor(clamped);
+  if (isSceneUnlocked(current, level: level, dayStreak: dayStreak)) {
+    return clamped;
+  }
+  for (final s in sceneBackgrounds) {
+    if (isSceneUnlocked(s, level: level, dayStreak: dayStreak)) {
+      return s.id;
+    }
+  }
+  return 0;
 }
 
 /// Tema bazlı sokak silueti / yağmur / yıldızlar.
@@ -94,12 +156,17 @@ class SceneBackdropPainter extends CustomPainter {
     );
     canvas.drawRect(groundRect, Paint()..color = theme.ground);
 
-    if (theme.id == 1) {
-      _paintNight(canvas, size, groundH);
-    } else if (theme.id == 2) {
-      _paintRain(canvas, size, groundH);
-    } else {
-      _paintStreet(canvas, size, groundH);
+    switch (theme.id) {
+      case 1:
+        _paintNight(canvas, size, groundH);
+      case 2:
+        _paintRain(canvas, size, groundH);
+      case 3:
+        _paintDusk(canvas, size, groundH);
+      case 4:
+        _paintNeon(canvas, size, groundH);
+      default:
+        _paintStreet(canvas, size, groundH);
     }
   }
 
@@ -190,6 +257,70 @@ class SceneBackdropPainter extends CustomPainter {
     canvas.drawOval(
       Rect.fromLTWH(size.width * 0.45, size.height * 0.02, size.width * 0.45, size.height * 0.14),
       cloud,
+    );
+  }
+
+  void _paintDusk(Canvas canvas, Size size, double groundH) {
+    final baseY = size.height - groundH;
+    final sun = Paint()..color = const Color(0xFFF0B429).withValues(alpha: 0.85);
+    canvas.drawCircle(
+      Offset(size.width * 0.78, baseY - size.height * 0.08),
+      size.shortestSide * 0.1,
+      sun,
+    );
+    final building = Paint()..color = AppTheme.ink.withValues(alpha: 0.4);
+    canvas.drawRect(
+      Rect.fromLTWH(
+        size.width * 0.1,
+        baseY - size.height * 0.3,
+        size.width * 0.22,
+        size.height * 0.3,
+      ),
+      building,
+    );
+    canvas.drawRect(
+      Rect.fromLTWH(
+        size.width * 0.4,
+        baseY - size.height * 0.42,
+        size.width * 0.18,
+        size.height * 0.42,
+      ),
+      building,
+    );
+  }
+
+  void _paintNeon(Canvas canvas, Size size, double groundH) {
+    final baseY = size.height - groundH;
+    final neonA = Paint()..color = const Color(0xFFE07A3D).withValues(alpha: 0.7);
+    final neonB = Paint()..color = const Color(0xFF5B8FA8).withValues(alpha: 0.65);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(size.width * 0.12, baseY - size.height * 0.28, size.width * 0.28, size.height * 0.06),
+        const Radius.circular(4),
+      ),
+      neonA,
+    );
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(size.width * 0.55, baseY - size.height * 0.36, size.width * 0.3, size.height * 0.05),
+        const Radius.circular(4),
+      ),
+      neonB,
+    );
+    final building = Paint()..color = const Color(0xFF0A0612).withValues(alpha: 0.75);
+    canvas.drawRect(
+      Rect.fromLTWH(
+        size.width * 0.08,
+        baseY - size.height * 0.4,
+        size.width * 0.25,
+        size.height * 0.4,
+      ),
+      building,
+    );
+    canvas.drawCircle(
+      Offset(size.width * 0.7, size.height * 0.15),
+      2,
+      Paint()..color = Colors.white.withValues(alpha: 0.7),
     );
   }
 

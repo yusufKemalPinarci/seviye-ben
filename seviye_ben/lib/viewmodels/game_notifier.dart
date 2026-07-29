@@ -32,6 +32,7 @@ class GameState {
     this.hapticEnabled = true,
     this.lastLevelUp,
     this.lastUnlockNames = const [],
+    this.lastUnlockIds = const [],
     this.levelMessage,
     this.dailyQuestJustCompleted = false,
     this.dailyQuestBonusXp,
@@ -40,6 +41,7 @@ class GameState {
     this.weeklyChallengeJustCompleted = false,
     this.weeklyChallengeBonusXp,
     this.habitCompletePulse = 0,
+    this.lastHabitStat,
   });
 
   final Player player;
@@ -51,6 +53,7 @@ class GameState {
   final bool hapticEnabled;
   final int? lastLevelUp;
   final List<String> lastUnlockNames;
+  final List<String> lastUnlockIds;
   final String? levelMessage;
   final bool dailyQuestJustCompleted;
   final int? dailyQuestBonusXp;
@@ -60,6 +63,8 @@ class GameState {
   final int? weeklyChallengeBonusXp;
   /// Bitir animasyonu tetikleyicisi (monoton artan; seviye atlamada artmaz).
   final int habitCompletePulse;
+  /// Son bitirilen alışkanlığın istatistiği (sparkle rengi).
+  final StatType? lastHabitStat;
 
   int get level => GameBalance.levelFromXp(player.xp);
 
@@ -137,6 +142,7 @@ class GameState {
     bool? hapticEnabled,
     int? lastLevelUp,
     List<String>? lastUnlockNames,
+    List<String>? lastUnlockIds,
     String? levelMessage,
     bool? dailyQuestJustCompleted,
     int? dailyQuestBonusXp,
@@ -145,6 +151,7 @@ class GameState {
     bool? weeklyChallengeJustCompleted,
     int? weeklyChallengeBonusXp,
     int? habitCompletePulse,
+    StatType? lastHabitStat,
     bool clearLevelUp = false,
     bool clearUnlocks = false,
     bool clearLevelMessage = false,
@@ -164,6 +171,8 @@ class GameState {
       lastLevelUp: clearLevelUp ? null : (lastLevelUp ?? this.lastLevelUp),
       lastUnlockNames:
           clearUnlocks ? const [] : (lastUnlockNames ?? this.lastUnlockNames),
+      lastUnlockIds:
+          clearUnlocks ? const [] : (lastUnlockIds ?? this.lastUnlockIds),
       levelMessage:
           clearLevelMessage ? null : (levelMessage ?? this.levelMessage),
       dailyQuestJustCompleted: clearDailyQuestFlag
@@ -185,6 +194,7 @@ class GameState {
           ? null
           : (weeklyChallengeBonusXp ?? this.weeklyChallengeBonusXp),
       habitCompletePulse: habitCompletePulse ?? this.habitCompletePulse,
+      lastHabitStat: lastHabitStat ?? this.lastHabitStat,
     );
   }
 }
@@ -310,10 +320,12 @@ class GameNotifier extends StateNotifier<GameState> {
 
     var unlockedIds = state.unlockedIds;
     var unlockNames = <String>[];
+    var unlockIds = <String>[];
     String? levelMessage;
     if (newLevel > oldLevel) {
       final newly = await LocalStore.unlockForLevel(newLevel, state.content);
       unlockedIds = LocalStore.loadUnlocked();
+      unlockIds = newly;
       unlockNames = newly
           .map(state.content.equipmentById)
           .whereType<Equipment>()
@@ -333,6 +345,8 @@ class GameNotifier extends StateNotifier<GameState> {
       unlockedIds: unlockedIds,
       lastLevelUp: leveledUp ? newLevel : null,
       lastUnlockNames: unlockNames,
+      lastUnlockIds: unlockIds,
+      lastHabitStat: habit.stat,
       levelMessage: levelMessage,
       dailyQuestJustCompleted: dailyJustDone,
       dailyQuestBonusXp: dailyBonus,
@@ -558,6 +572,14 @@ class GameNotifier extends StateNotifier<GameState> {
   Future<void> setBackgroundTheme(int index) async {
     final clamped = clampBackgroundTheme(index);
     if (clamped == state.player.backgroundTheme) {
+      return;
+    }
+    final scene = backgroundThemeFor(clamped);
+    if (!isSceneUnlocked(
+      scene,
+      level: state.level,
+      dayStreak: state.player.dayStreak,
+    )) {
       return;
     }
     final player = state.player.copyWith(backgroundTheme: clamped);

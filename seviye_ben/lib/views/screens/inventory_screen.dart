@@ -3,11 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/equipment.dart';
 import '../../models/stat_type.dart';
-import '../../utils/equipment_look.dart';
 import '../../utils/background_theme.dart';
+import '../../utils/equipment_look.dart';
 import '../../viewmodels/game_notifier.dart';
 import '../widgets/animated_character_avatar.dart';
 import '../widgets/avatar_scene_frame.dart';
+import '../widgets/gear_silhouette.dart';
 
 class InventoryScreen extends ConsumerWidget {
   const InventoryScreen({super.key});
@@ -17,7 +18,12 @@ class InventoryScreen extends ConsumerWidget {
     final game = ref.watch(gameProvider);
     final all = game.content.equipment;
     final unlocked = game.unlockedEquipment;
-    final scene = backgroundThemeFor(game.player.backgroundTheme);
+    final themeIndex = resolveUsableBackgroundTheme(
+      themeIndex: game.player.backgroundTheme,
+      level: game.level,
+      dayStreak: game.player.dayStreak,
+    );
+    final scene = backgroundThemeFor(themeIndex);
     final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -29,7 +35,7 @@ class InventoryScreen extends ConsumerWidget {
             label: 'Karakter önizlemesi, ${scene.name} arka planı',
             child: Center(
               child: AvatarSceneFrame(
-                themeIndex: game.player.backgroundTheme,
+                themeIndex: themeIndex,
                 child: AnimatedCharacterAvatar(
                   key: ValueKey(
                     EquipSlot.values
@@ -39,6 +45,10 @@ class InventoryScreen extends ConsumerWidget {
                   lookIndex: game.player.lookIndex,
                   level: game.level,
                   equipped: game.equippedBySlot,
+                  strength: game.player.strength,
+                  intellect: game.player.intellect,
+                  energy: game.player.energy,
+                  vitality: game.player.vitality,
                   size: 200,
                   enableBounce: false,
                 ),
@@ -65,7 +75,8 @@ class InventoryScreen extends ConsumerWidget {
             children: EquipSlot.values.map((slot) {
               final eq = game.equippedIn(slot);
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 decoration: BoxDecoration(
                   color: eq == null
                       ? scheme.surfaceContainerHighest.withValues(alpha: 0.5)
@@ -93,7 +104,9 @@ class InventoryScreen extends ConsumerWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      eq == null ? '${slot.labelTr}: boş' : '${slot.labelTr}: ${eq.name}',
+                      eq == null
+                          ? '${slot.labelTr}: boş'
+                          : '${slot.labelTr}: ${eq.name}',
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ],
@@ -124,11 +137,11 @@ class InventoryScreen extends ConsumerWidget {
               clipBehavior: Clip.antiAlias,
               child: ListTile(
                 leading: CircleAvatar(
-                  backgroundColor: color,
-                  child: Icon(
-                    _slotIcon(eq.slot),
-                    color: scheme.onSurface,
-                    size: 20,
+                  backgroundColor: color.withValues(alpha: 0.25),
+                  child: GearSilhouette(
+                    equipment: eq,
+                    size: 28,
+                    locked: !isUnlocked,
                   ),
                 ),
                 title: Text(eq.name),
@@ -148,9 +161,7 @@ class InventoryScreen extends ConsumerWidget {
                     : isEquipped
                         ? TextButton(
                             onPressed: () {
-                              ref
-                                  .read(gameProvider.notifier)
-                                  .unequip(eq.slot);
+                              ref.read(gameProvider.notifier).unequip(eq.slot);
                             },
                             child: const Text('Çıkar'),
                           )
@@ -170,20 +181,5 @@ class InventoryScreen extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  IconData _slotIcon(EquipSlot slot) {
-    switch (slot) {
-      case EquipSlot.head:
-        return Icons.face;
-      case EquipSlot.body:
-        return Icons.checkroom;
-      case EquipSlot.back:
-        return Icons.backpack;
-      case EquipSlot.feet:
-        return Icons.directions_walk;
-      case EquipSlot.accessory:
-        return Icons.watch;
-    }
   }
 }

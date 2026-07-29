@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../models/equipment.dart';
+import '../../models/player.dart';
 import '../../services/haptic_service.dart';
 import '../../utils/app_theme.dart';
 import 'character_avatar.dart';
@@ -13,8 +14,10 @@ Future<void> showLevelUpCelebration(
   required int level,
   required int lookIndex,
   required Map<EquipSlot, Equipment?> equipped,
+  Player? player,
   String? message,
   List<String> unlockNames = const [],
+  List<Equipment> unlockGear = const [],
 }) {
   HapticService.mediumImpact();
   return showGeneralDialog<void>(
@@ -28,8 +31,10 @@ Future<void> showLevelUpCelebration(
         level: level,
         lookIndex: lookIndex,
         equipped: equipped,
+        player: player,
         message: message,
         unlockNames: unlockNames,
+        unlockGear: unlockGear,
       );
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -51,15 +56,19 @@ class LevelUpCelebration extends StatefulWidget {
     required this.level,
     required this.lookIndex,
     required this.equipped,
+    this.player,
     this.message,
     this.unlockNames = const [],
+    this.unlockGear = const [],
   });
 
   final int level;
   final int lookIndex;
   final Map<EquipSlot, Equipment?> equipped;
+  final Player? player;
   final String? message;
   final List<String> unlockNames;
+  final List<Equipment> unlockGear;
 
   @override
   State<LevelUpCelebration> createState() => _LevelUpCelebrationState();
@@ -67,12 +76,15 @@ class LevelUpCelebration extends StatefulWidget {
 
 class _LevelUpCelebrationState extends State<LevelUpCelebration>
     with TickerProviderStateMixin {
-  static const _autoClose = Duration(milliseconds: 2200);
+  static const _autoClose = Duration(milliseconds: 2800);
+  static const _tryOnStep = Duration(milliseconds: 700);
 
   late final AnimationController _bounce;
   late final AnimationController _party;
   late final Animation<double> _scale;
   Timer? _autoCloseTimer;
+  Timer? _tryOnTimer;
+  int _tryOnIndex = -1;
 
   @override
   void initState() {
@@ -99,7 +111,30 @@ class _LevelUpCelebrationState extends State<LevelUpCelebration>
       duration: const Duration(milliseconds: 1800),
     )..forward();
 
-    _autoCloseTimer = Timer(_autoClose, () {
+    if (widget.unlockGear.isNotEmpty) {
+      _tryOnIndex = 0;
+      _tryOnTimer = Timer.periodic(_tryOnStep, (timer) {
+        if (!mounted) {
+          timer.cancel();
+          return;
+        }
+        if (_tryOnIndex + 1 >= widget.unlockGear.length) {
+          timer.cancel();
+          setState(() => _tryOnIndex = -1);
+          return;
+        }
+        setState(() => _tryOnIndex++);
+      });
+    }
+
+    final closeAfter = widget.unlockGear.isEmpty
+        ? _autoClose
+        : Duration(
+            milliseconds:
+                _autoClose.inMilliseconds +
+                widget.unlockGear.length * _tryOnStep.inMilliseconds,
+          );
+    _autoCloseTimer = Timer(closeAfter, () {
       if (mounted && Navigator.of(context).canPop()) {
         Navigator.of(context).pop();
       }
@@ -109,9 +144,21 @@ class _LevelUpCelebrationState extends State<LevelUpCelebration>
   @override
   void dispose() {
     _autoCloseTimer?.cancel();
+    _tryOnTimer?.cancel();
     _bounce.dispose();
     _party.dispose();
     super.dispose();
+  }
+
+  Map<EquipSlot, Equipment?> get _displayEquipped {
+    if (_tryOnIndex < 0 || _tryOnIndex >= widget.unlockGear.length) {
+      return widget.equipped;
+    }
+    final piece = widget.unlockGear[_tryOnIndex];
+    return {
+      ...widget.equipped,
+      piece.slot: piece,
+    };
   }
 
   @override
@@ -120,6 +167,10 @@ class _LevelUpCelebrationState extends State<LevelUpCelebration>
     final unlockText = widget.unlockNames.isEmpty
         ? null
         : 'Yeni açılan: ${widget.unlockNames.join(', ')}';
+    final tryOnName = (_tryOnIndex >= 0 && _tryOnIndex < widget.unlockGear.length)
+        ? widget.unlockGear[_tryOnIndex].name
+        : null;
+    final p = widget.player;
 
     return Center(
       child: Material(
@@ -163,11 +214,25 @@ class _LevelUpCelebrationState extends State<LevelUpCelebration>
                     child: CharacterAvatar(
                       lookIndex: widget.lookIndex,
                       level: widget.level,
-                      equipped: widget.equipped,
+                      equipped: _displayEquipped,
+                      strength: p?.strength ?? 1,
+                      intellect: p?.intellect ?? 1,
+                      energy: p?.energy ?? 1,
+                      vitality: p?.vitality ?? 1,
                       size: 132,
                     ),
                   ),
                 ),
+                if (tryOnName != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    'Dene: $tryOnName',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: AppTheme.signal,
+                        ),
+                  ),
+                ],
                 const SizedBox(height: 8),
                 Text(
                   'Seviye atladın!',

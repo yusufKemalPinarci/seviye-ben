@@ -18,6 +18,7 @@ class PlayerHeader extends StatelessWidget {
     required this.equipped,
     required this.gearBonuses,
     this.habitCompletePulse = 0,
+    this.sparkleStat,
   });
 
   final Player player;
@@ -28,6 +29,7 @@ class PlayerHeader extends StatelessWidget {
   final Map<EquipSlot, Equipment?> equipped;
   final Map<StatType, int> gearBonuses;
   final int habitCompletePulse;
+  final StatType? sparkleStat;
 
   int _base(StatType s) => switch (s) {
         StatType.strength => player.strength,
@@ -89,9 +91,14 @@ class PlayerHeader extends StatelessWidget {
                       lookIndex: player.lookIndex,
                       level: level,
                       equipped: equipped,
+                      strength: player.strength,
+                      intellect: player.intellect,
+                      energy: player.energy,
+                      vitality: player.vitality,
                       size: 96,
                       showLevelBadge: false,
                       habitCompletePulse: habitCompletePulse,
+                      sparkleStat: sparkleStat,
                     ),
                   ),
                   Positioned(

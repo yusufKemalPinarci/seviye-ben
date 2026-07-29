@@ -11,7 +11,8 @@ abstract final class SettingsStrings {
   static const lookTitle = 'Sokak görünümü';
   static const lookHint = 'Karakterinin sokak stili.';
   static const atmosphereTitle = 'Sokak atmosferi';
-  static const atmosphereHint = 'Avatarının arkasındaki sokak manzarası.';
+  static const atmosphereHint =
+      'Seviye ve seriyle açılan sokak manzaraları.';
   static const sectionData = 'Veri';
   static const sectionAccessibility = 'Erişilebilirlik';
   static const fontScaleInfoTitle = 'Yazı boyutu';

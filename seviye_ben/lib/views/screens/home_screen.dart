@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../models/equipment.dart';
 import '../../models/stat_type.dart';
 import '../../utils/game_balance.dart';
 import '../../viewmodels/game_notifier.dart';
@@ -52,6 +53,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           CustomScrollView(
             cacheExtent: 240,
             slivers: [
+              // Önce aksiyon: HUD + kısa ipucu + rutin listesi.
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 sliver: SliverToBoxAdapter(
@@ -62,13 +64,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       const SizedBox(height: 12),
                       const _HomeStreetLine(),
                       const _HomeStreakBreak(),
-                      const SizedBox(height: 12),
-                      const _HomeDailyQuest(),
-                      const SizedBox(height: 12),
-                      const _HomeWeeklyChallenge(),
-                      const SizedBox(height: 12),
-                      const _HomeTodaySummary(),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 8),
+                      const _HomeTodayGoalsCollapsed(),
+                      const SizedBox(height: 16),
                       Text(
                         'Bugünün görevleri',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -148,8 +146,11 @@ class _HomeFeedbackListener extends ConsumerWidget {
           lastAchievementTitles: s.lastAchievementTitles,
           levelMessage: s.levelMessage,
           lastUnlockNames: s.lastUnlockNames,
+          lastUnlockIds: s.lastUnlockIds,
           lookIndex: s.player.lookIndex,
           equipped: s.equippedBySlot,
+          player: s.player,
+          content: s.content,
         ),
       ),
     );
@@ -179,8 +180,13 @@ class _HomeFeedbackListener extends ConsumerWidget {
 
       final levelMessage = feedback.levelMessage;
       final unlockNames = List<String>.from(feedback.lastUnlockNames);
+      final unlockGear = feedback.lastUnlockIds
+          .map(feedback.content.equipmentById)
+          .whereType<Equipment>()
+          .toList();
       final lookIndex = feedback.lookIndex;
       final equipped = feedback.equipped;
+      final player = feedback.player;
 
       ref.read(gameProvider.notifier).clearFeedbackFlags();
 
@@ -199,8 +205,10 @@ class _HomeFeedbackListener extends ConsumerWidget {
           level: leveled,
           lookIndex: lookIndex,
           equipped: equipped,
+          player: player,
           message: levelMessage,
           unlockNames: unlockNames,
+          unlockGear: unlockGear,
         );
       }
     });
@@ -222,6 +230,7 @@ class _HomePlayerHeader extends ConsumerWidget {
           title: s.title,
           equipped: s.equippedBySlot,
           habitCompletePulse: s.habitCompletePulse,
+          lastHabitStat: s.lastHabitStat,
           gearBonuses: {
             for (final st in StatType.values) st: s.bonusFor(st),
           },
@@ -240,6 +249,7 @@ class _HomePlayerHeader extends ConsumerWidget {
       equipped: header.equipped,
       gearBonuses: header.gearBonuses,
       habitCompletePulse: header.habitCompletePulse,
+      sparkleStat: header.lastHabitStat,
     );
   }
 }
@@ -272,6 +282,84 @@ class _HomeStreakBreak extends ConsumerWidget {
         onDismiss: () {
           ref.read(gameProvider.notifier).clearStreakBreakNotice();
         },
+      ),
+    );
+  }
+}
+
+/// Günlük / haftalık / özet — varsayılan kapalı; ilk viewport’ta Bitir kalır.
+class _HomeTodayGoalsCollapsed extends ConsumerWidget {
+  const _HomeTodayGoalsCollapsed();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final summary = ref.watch(
+      gameProvider.select(
+        (s) => (
+          dailyDone: s.completedHabitsToday,
+          dailyTarget: s.todaysQuest.targetCount,
+          weeklyDone: s.weeklyDaysProgress,
+          weeklyTarget: s.thisWeeksChallenge.targetDays,
+          xpToday: s.xpEarnedToday,
+          dailyComplete: s.isDailyQuestDone,
+          weeklyComplete: s.isWeeklyChallengeDone,
+        ),
+      ),
+    );
+    final hint =
+        'Günlük ${summary.dailyDone}/${summary.dailyTarget}'
+        ' · Hafta ${summary.weeklyDone}/${summary.weeklyTarget}'
+        ' · +${summary.xpToday} XP';
+
+    return Material(
+      color: Colors.transparent,
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          initiallyExpanded: false,
+          tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+          childrenPadding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.35),
+            ),
+          ),
+          collapsedShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.35),
+            ),
+          ),
+          leading: Icon(
+            summary.dailyComplete && summary.weeklyComplete
+                ? Icons.check_circle
+                : Icons.flag_outlined,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+          title: const Text(
+            'Bugünün hedefleri',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+          ),
+          subtitle: Text(
+            hint,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          children: const [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: Column(
+                children: [
+                  _HomeDailyQuest(),
+                  SizedBox(height: 12),
+                  _HomeWeeklyChallenge(),
+                  SizedBox(height: 12),
+                  _HomeTodaySummary(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

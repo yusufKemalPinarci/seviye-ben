@@ -217,6 +217,66 @@
       "bonus": 5,
       "setId": "set_canli",
       "description": "Sokakta görünür ol, vazgeçme."
+    },
+    {
+      "id": "eq_gozluk",
+      "name": "Odak Gözlüğü",
+      "slot": "head",
+      "requiredLevel": 14,
+      "stat": "intellect",
+      "bonus": 5,
+      "setId": "set_efsane",
+      "description": "Net bakış, net karar."
+    },
+    {
+      "id": "eq_eldiven",
+      "name": "Antrenman Eldiveni",
+      "slot": "accessory",
+      "requiredLevel": 14,
+      "stat": "strength",
+      "bonus": 5,
+      "setId": "set_efsane",
+      "description": "Kavrama güçlendi, tempo sertleşti."
+    },
+    {
+      "id": "eq_yelek",
+      "name": "Tempo Yeleği",
+      "slot": "body",
+      "requiredLevel": 15,
+      "stat": "strength",
+      "bonus": 6,
+      "setId": "set_efsane",
+      "description": "Hafif katman, ağır disiplin."
+    },
+    {
+      "id": "eq_spor_canta",
+      "name": "Mahalle Spor Çantası",
+      "slot": "back",
+      "requiredLevel": 16,
+      "stat": "vitality",
+      "bonus": 6,
+      "setId": "set_canli",
+      "description": "Su, havlu, kararlılık — hepsi sırtında."
+    },
+    {
+      "id": "eq_maske",
+      "name": "Gece Maskesi",
+      "slot": "head",
+      "requiredLevel": 18,
+      "stat": "energy",
+      "bonus": 6,
+      "setId": "set_gece",
+      "description": "Erken uyku, keskin sabah."
+    },
+    {
+      "id": "eq_parka",
+      "name": "Efsane Parka",
+      "slot": "body",
+      "requiredLevel": 20,
+      "stat": "vitality",
+      "bonus": 7,
+      "setId": "set_efsane",
+      "description": "Uzun yol, uzun soluk. Sokak efsanesi kıyafeti."
     }
   ],
   "equipment_sets": [
@@ -231,7 +291,7 @@
     {
       "id": "set_gece",
       "name": "Gece Ritmi",
-      "pieceIds": ["eq_bere", "eq_hoodie", "eq_saat"],
+      "pieceIds": ["eq_bere", "eq_hoodie", "eq_saat", "eq_maske"],
       "tiers": [
         { "pieces": 2, "stat": "energy", "bonus": 1 },
         { "pieces": 3, "stat": "energy", "bonus": 2 }
@@ -249,10 +309,19 @@
     {
       "id": "set_canli",
       "name": "Canlı Mahalle",
-      "pieceIds": ["eq_matara", "eq_siperlik", "eq_mont"],
+      "pieceIds": ["eq_matara", "eq_siperlik", "eq_mont", "eq_spor_canta"],
       "tiers": [
         { "pieces": 2, "stat": "vitality", "bonus": 1 },
         { "pieces": 3, "stat": "vitality", "bonus": 2 }
+      ]
+    },
+    {
+      "id": "set_efsane",
+      "name": "Efsane Tempo",
+      "pieceIds": ["eq_gozluk", "eq_eldiven", "eq_yelek", "eq_parka"],
+      "tiers": [
+        { "pieces": 2, "stat": "strength", "bonus": 2 },
+        { "pieces": 3, "stat": "intellect", "bonus": 2 }
       ]
     }
   ],

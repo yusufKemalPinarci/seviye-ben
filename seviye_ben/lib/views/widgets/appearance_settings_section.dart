@@ -62,14 +62,28 @@ class AppearanceSettingsSection extends ConsumerWidget {
           spacing: 8,
           runSpacing: 8,
           children: sceneBackgrounds.map((scene) {
+            final unlocked = isSceneUnlocked(
+              scene,
+              level: game.level,
+              dayStreak: game.player.dayStreak,
+            );
             final selected = game.player.backgroundTheme == scene.id;
             return ChoiceChip(
-              selected: selected,
-              label: Text(scene.name),
-              avatar: Icon(scene.icon, size: 16),
-              onSelected: (_) {
-                ref.read(gameProvider.notifier).setBackgroundTheme(scene.id);
-              },
+              selected: selected && unlocked,
+              label: Text(
+                unlocked ? scene.name : '${scene.name} (${sceneUnlockHint(scene)})',
+              ),
+              avatar: Icon(
+                unlocked ? scene.icon : Icons.lock_outline,
+                size: 16,
+              ),
+              onSelected: unlocked
+                  ? (_) {
+                      ref
+                          .read(gameProvider.notifier)
+                          .setBackgroundTheme(scene.id);
+                    }
+                  : null,
             );
           }).toList(),
         ),

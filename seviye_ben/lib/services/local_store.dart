@@ -20,16 +20,18 @@ class LocalStore {
 
     final content = await ContentLoader.load();
     final habits = Hive.box(_habitsBox);
-    if (habits.isEmpty) {
-      for (final h in seedHabitsFromContent(content)) {
-        await habits.put(h.id, h.toJson());
-      }
-    } else {
-      for (final h in seedHabitsFromContent(content)) {
-        if (!habits.containsKey(h.id)) {
+    final settings = Hive.box(_settingsBox);
+    final contentHabitsSeeded =
+        settings.get('contentHabitsSeeded', defaultValue: false) as bool;
+
+    // Yalnızca ilk kurulumda seedle. Silinen içerik alışkanlıkları geri yazılmaz.
+    if (!contentHabitsSeeded) {
+      if (habits.isEmpty) {
+        for (final h in seedHabitsFromContent(content)) {
           await habits.put(h.id, h.toJson());
         }
       }
+      await settings.put('contentHabitsSeeded', true);
     }
 
     final player = Hive.box(_playerBox);

@@ -5,12 +5,14 @@ import '../../models/achievement.dart';
 import '../../models/equipment.dart';
 import '../../models/stat_type.dart';
 import '../../utils/app_theme.dart';
-import '../../utils/equipment_look.dart';
+import '../../utils/background_theme.dart';
 import '../../utils/game_balance.dart';
+import '../../utils/progression_look.dart';
 import '../../viewmodels/game_notifier.dart';
 import '../widgets/achievement_badge_row.dart';
 import '../widgets/animated_character_avatar.dart';
 import '../widgets/avatar_scene_frame.dart';
+import '../widgets/gear_silhouette.dart';
 import '../widgets/week_stats_chart.dart';
 import '../widgets/xp_bar.dart';
 
@@ -72,11 +74,19 @@ class CharacterScreen extends ConsumerWidget {
         children: [
           Center(
             child: AvatarSceneFrame(
-              themeIndex: game.player.backgroundTheme,
+              themeIndex: resolveUsableBackgroundTheme(
+                themeIndex: game.player.backgroundTheme,
+                level: game.level,
+                dayStreak: game.player.dayStreak,
+              ),
               child: AnimatedCharacterAvatar(
                 lookIndex: game.player.lookIndex,
                 level: game.level,
                 equipped: game.equippedBySlot,
+                strength: game.player.strength,
+                intellect: game.player.intellect,
+                energy: game.player.energy,
+                vitality: game.player.vitality,
                 size: 220,
                 enableBounce: false,
               ),
@@ -90,29 +100,8 @@ class CharacterScreen extends ConsumerWidget {
                   fontWeight: FontWeight.w800,
                 ),
           ),
-          const SizedBox(height: 4),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppTheme.xpGold.withValues(alpha: 0.18),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppTheme.xpGold.withValues(alpha: 0.5)),
-            ),
-            child: Text(
-              game.title,
-              style: const TextStyle(
-                fontWeight: FontWeight.w800,
-                color: AppTheme.street,
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Seviye ${game.level}'
-            '${game.player.dayStreak > 0 ? ' · ${game.player.dayStreak} gün seri' : ''}',
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
+          const SizedBox(height: 10),
+          _StreetIdentityCard(game: game),
           const SizedBox(height: 10),
           XpBar(
             progress: xpNeed == 0 ? 1 : (xpIn / xpNeed).clamp(0.0, 1.0),
@@ -201,10 +190,11 @@ class CharacterScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
           ...game.setStatuses.map((status) {
+            final pieceMax = status.set.pieceIds.length;
             final tier = status.activeTier;
             final subtitle = tier == null
-                ? '${status.equippedCount}/3 parça · Set tamamlanmadı'
-                : '${status.equippedCount}/3 · +${tier.bonus} ${tier.stat.labelTr}';
+                ? '${status.equippedCount}/$pieceMax parça · Set tamamlanmadı'
+                : '${status.equippedCount}/$pieceMax · +${tier.bonus} ${tier.stat.labelTr}';
             return ListTile(
               contentPadding: EdgeInsets.zero,
               leading: Icon(
@@ -238,16 +228,17 @@ class CharacterScreen extends ConsumerWidget {
             final eq = game.equippedIn(slot);
             return ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: CircleAvatar(
-                backgroundColor: eq == null
-                    ? Theme.of(context).disabledColor.withValues(alpha: 0.2)
-                    : equipmentColor(eq.id, slot),
-                child: Icon(
-                  _slotIcon(slot),
-                  color: Theme.of(context).colorScheme.onSurface,
-                  size: 18,
-                ),
-              ),
+              leading: eq == null
+                  ? CircleAvatar(
+                      backgroundColor:
+                          Theme.of(context).disabledColor.withValues(alpha: 0.2),
+                      child: Icon(
+                        _slotIcon(slot),
+                        color: Theme.of(context).colorScheme.onSurface,
+                        size: 18,
+                      ),
+                    )
+                  : GearSilhouette(equipment: eq, size: 40),
               title: Text(slot.labelTr),
               subtitle: Text(
                 eq == null
@@ -257,17 +248,6 @@ class CharacterScreen extends ConsumerWidget {
             );
           }),
           const Divider(height: 32),
-          Text(
-            'Rozetler',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 8),
-          AchievementBadgeRow(
-            unlocked: game.content.achievements
-                .where((a) => game.hasAchievement(a.id))
-                .toList(),
-          ),
-          const SizedBox(height: 16),
           Text(
             'Başarımlar',
             style: Theme.of(context).textTheme.titleMedium,
@@ -322,5 +302,126 @@ class CharacterScreen extends ConsumerWidget {
       case EquipSlot.accessory:
         return Icons.watch;
     }
+  }
+}
+
+class _StreetIdentityCard extends StatelessWidget {
+  const _StreetIdentityCard({required this.game});
+
+  final GameState game;
+
+  @override
+  Widget build(BuildContext context) {
+    final tier = streetTierForLevel(game.level);
+    final activeSets = game.setStatuses.where((s) => s.isActive).toList();
+    final setLabel = activeSets.isEmpty
+        ? 'Set yok'
+        : activeSets.map((s) => s.set.name).join(' · ');
+    final scene = backgroundThemeFor(
+      resolveUsableBackgroundTheme(
+        themeIndex: game.player.backgroundTheme,
+        level: game.level,
+        dayStreak: game.player.dayStreak,
+      ),
+    );
+    final unlockedBadges = game.content.achievements
+        .where((a) => game.hasAchievement(a.id))
+        .toList();
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: AppTheme.gamePanel(
+        borderColor: tier.ringColor.withValues(alpha: 0.45),
+        glow: true,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Sokak kimliği',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+          ),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              _IdentityChip(
+                icon: Icons.military_tech,
+                label: game.title,
+                color: AppTheme.xpGold,
+              ),
+              _IdentityChip(
+                icon: Icons.trending_up,
+                label: '${tier.nameTr} · Sv.${game.level}',
+                color: tier.ringColor,
+              ),
+              if (game.player.dayStreak > 0)
+                _IdentityChip(
+                  icon: Icons.local_fire_department,
+                  label: '${game.player.dayStreak} gün seri',
+                  color: AppTheme.streak,
+                ),
+              _IdentityChip(
+                icon: Icons.layers,
+                label: setLabel,
+                color: AppTheme.street,
+              ),
+              _IdentityChip(
+                icon: scene.icon,
+                label: scene.name,
+                color: AppTheme.signal,
+              ),
+            ],
+          ),
+          if (unlockedBadges.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            AchievementBadgeRow(unlocked: unlockedBadges),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _IdentityChip extends StatelessWidget {
+  const _IdentityChip({
+    required this.icon,
+    required this.label,
+    required this.color,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.55)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: color),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 12,
+              color: AppTheme.ink,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -19,9 +19,8 @@ Klasör: `seviye_ben/`
 
 ## Git
 
-- Dal: `cursor/equip-visibility-game-hud` (origin’de)
-- Son commit: `b1e59c9` — equip visibility + RPG HUD
-- Base: `main`
+- Dal: `main` (yerel değişiklikler: Faz G + Faz H; henüz commit yok)
+- Base: `origin/main`
 
 ---
 
@@ -30,25 +29,24 @@ Klasör: `seviye_ben/`
 | Alan | Durum |
 |------|--------|
 | Çekirdek + Faz B–E + F1–F3 + AAB | ✓ |
-| Crew kaldırıldı; sprint = skill + PROGRESS | ✓ |
-| Ekipman: sırt slotu, avatar katmanları, envanter “Üzerinde” | ✓ |
-| Oyun HUD: XP bar, istatistik pill, görev kartları | ✓ |
+| Faz G — Görsel self-development | ✓ |
+| **Faz H — FTUE / doğruluk (H1–H3)** | ✓ |
+| **F4 hazırlık** (runbook + privacy URL hedefi) | ✓ |
 
 ### Bu turda yapılanlar (detay)
 
-- **Workflow:** CrewAI zorunluluğu kalktı; `.cursor/skills/seviye-ben-sprint/` + bu dosya
-- **Bug:** Ders çantası `body` yerine `back` (kıyafeti düşürmez); eski kayıt migrate
-- **Avatar:** Konturlu katmanlar; çanta kolların üstünde
-- **Envanter:** Slot özeti; aynı slotta “Değiştir” uyarısı
-- **Asfalt seti:** 3 parça imkânsızdı (2 ayakkabı) → max 2 parça bonus
-- **UI:** RPG HUD header, `XpBar`, habit/görev kartları, karakter istatistik panelleri
+- **H1:** `contentHabitsSeeded` — silinen seed habit geri gelmez; boş listede “Alışkanlık ekle” CTA
+- **H2:** Onboarding “Sokak döngüsü” (Bitir → XP → Giy)
+- **H3:** Ana ekranda “Bugünün hedefleri” ExpansionTile (kapalı); rutin listesi üstte
+- **F4:** [`docs/F4_CONSOLE.md`](F4_CONSOLE.md) + PLAY_STORE gizlilik URL hedefi; Pages/Console canlı adımları hesap sahibinde
 
 ---
 
 ## Sonraki sprint
 
-1. **F4 — Dahili / kapalı test → üretim** (Play Console)
+1. **F4 Console işleri** — Pages aç (`main`/`/docs`), Data safety + listing + dahili→kapalı→üretim ([`F4_CONSOLE.md`](F4_CONSOLE.md))
 2. F5 — (İsteğe bağlı) iOS App Store paket
+3. (Sonra) Yerel bildirim / home widget
 
 ---
 
@@ -74,9 +72,8 @@ ROADMAP: docs/ROADMAP.md (referans).
 Kurallar:
 - CrewAI yok; crew output yazma.
 - Tek sprint = PROGRESS "Sonraki sprint" 1. madde.
-- Her biten işte docs/PROGRESS.md güncelle (tamamlanan + sıradaki + bu chat özeti).
-- Dal: cursor/equip-visibility-game-hud (gerekirse main’e merge sor).
+- Her biten işte docs/PROGRESS.md güncelle.
 
 ## Sıradaki
-F4 — Dahili / kapalı test → üretim.
+F4 Console: Pages + Data safety + dahili→üretim (docs/F4_CONSOLE.md).
 ```

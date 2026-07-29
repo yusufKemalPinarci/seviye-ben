@@ -85,6 +85,27 @@
 
 ---
 
+## Faz G — Görsel self-development (bitti ✓)
+
+| Sprint | Konu | Kabul |
+|--------|------|--------|
+| **G1** | Seviye basamakları + baskın stat aura | Sv.3 vs Sv.15 ayırt edilir |
+| **G2** | Unlock try-on + envanter siluet | Level-up’ta dene; listede siluet |
+| **G3** | Sahne unlock + sokak kimliği | Kilitli tema; kimlik kartı |
+| **G4** | +ekipman, habit sparkle, polisaj | 18 parça; test yeşil |
+
+---
+
+## Faz H — FTUE / doğruluk (bitti ✓)
+
+| Sprint | Konu | Kabul |
+|--------|------|--------|
+| **H1** | Seed reseed bug + boş liste CTA | Silinen habit hortlamaz; CTA |
+| **H2** | Onboarding loop demosu | Bitir→XP→Giy anlaşılır |
+| **H3** | Ana ekran ilk-gün sadeleştirme | Hedefler kapalı; liste üstte |
+
+---
+
 ## Bilerek kapsam dışı (şimdilik)
 
 - Online hesap, bulut sync, sosyal liderlik

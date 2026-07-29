@@ -52,7 +52,10 @@ Tam form cevapları: [`DATA_SAFETY.md`](DATA_SAFETY.md)
 
 | Alan | Değer |
 |------|--------|
-| Gizlilik URL | _(host ettikten sonra buraya yaz)_ |
+| Gizlilik URL | `https://yusufkemalpinarci.github.io/seviye-ben/privacy/` |
+
+> Pages kapalıysa: repo Settings → Pages → Branch `main` / folder `/docs` → kaydet.  
+> Ayrıntılı Console checklist: [`F4_CONSOLE.md`](F4_CONSOLE.md)
 
 ## İmza (upload keystore)
 ```bash
@@ -88,9 +91,11 @@ Yeniden çizim: `python docs/store/screenshots/render_shots.py`
 - [x] Upload keystore + `key.properties` (yerel; git dışı)
 - [x] `flutter build appbundle --release` (release imza)
 - [x] Gizlilik politikası HTML + Data safety cevapları (`privacy/`, `DATA_SAFETY.md`)
-- [ ] Gizlilik URL’sini host et ve Console’a yapıştır
+- [x] Gizlilik URL hedefi yazıldı (`PLAY_STORE.md` + `F4_CONSOLE.md`; Pages açılınca canlı)
 - [ ] Data safety formunu Console’da gönder
 - [ ] Kısa / uzun açıklama yapıştır
 - [x] Feature graphic + ekran görüntüleri (`docs/store/screenshots/`)
 - [ ] İçerik derecelendirmesi anketi
 - [ ] Dahili test → kapalı test → üretim
+
+Operasyon adımları: [`F4_CONSOLE.md`](F4_CONSOLE.md)

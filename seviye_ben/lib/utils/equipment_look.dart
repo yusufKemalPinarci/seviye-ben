@@ -74,6 +74,18 @@ Color equipmentColor(String? equipmentId, EquipSlot slot) {
       return const Color(0xFF5B8FA8);
     case 'eq_saat':
       return AppTheme.signal;
+    case 'eq_gozluk':
+      return const Color(0xFF1A1A22);
+    case 'eq_yelek':
+      return const Color(0xFF4A3728);
+    case 'eq_spor_canta':
+      return const Color(0xFF2E5A4A);
+    case 'eq_eldiven':
+      return const Color(0xFFC45C2A);
+    case 'eq_maske':
+      return const Color(0xFF3A3A48);
+    case 'eq_parka':
+      return const Color(0xFF1A2F4A);
     default:
       switch (slot) {
         case EquipSlot.head:
@@ -90,7 +102,27 @@ Color equipmentColor(String? equipmentId, EquipSlot slot) {
   }
 }
 
-enum GearKind { bare, beanie, cap, bandana, tee, hoodie, bag, coat, sneaker, boot, phones, bottle, watch }
+enum GearKind {
+  bare,
+  beanie,
+  cap,
+  bandana,
+  glasses,
+  mask,
+  tee,
+  hoodie,
+  vest,
+  coat,
+  parka,
+  bag,
+  duffel,
+  sneaker,
+  boot,
+  phones,
+  bottle,
+  watch,
+  gloves,
+}
 
 GearKind gearKindFor(String? id, EquipSlot slot) {
   switch (id) {
@@ -100,14 +132,24 @@ GearKind gearKindFor(String? id, EquipSlot slot) {
       return GearKind.cap;
     case 'eq_cizgi':
       return GearKind.bandana;
+    case 'eq_gozluk':
+      return GearKind.glasses;
+    case 'eq_maske':
+      return GearKind.mask;
     case 'eq_tisort':
       return GearKind.tee;
     case 'eq_hoodie':
       return GearKind.hoodie;
+    case 'eq_yelek':
+      return GearKind.vest;
     case 'eq_sirt_cantasi':
       return GearKind.bag;
+    case 'eq_spor_canta':
+      return GearKind.duffel;
     case 'eq_mont':
       return GearKind.coat;
+    case 'eq_parka':
+      return GearKind.parka;
     case 'eq_spor_ayakkabi':
       return GearKind.sneaker;
     case 'eq_trail':
@@ -118,6 +160,8 @@ GearKind gearKindFor(String? id, EquipSlot slot) {
       return GearKind.bottle;
     case 'eq_saat':
       return GearKind.watch;
+    case 'eq_eldiven':
+      return GearKind.gloves;
     default:
       return GearKind.bare;
   }

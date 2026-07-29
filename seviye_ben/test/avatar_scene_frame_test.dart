@@ -5,7 +5,7 @@ import 'package:seviye_ben/utils/background_theme.dart';
 import 'package:seviye_ben/views/widgets/avatar_scene_frame.dart';
 
 void main() {
-  testWidgets('AvatarSceneFrame üç tema ile çizilir', (tester) async {
+  testWidgets('AvatarSceneFrame tüm temalarla çizilir', (tester) async {
     for (final scene in sceneBackgrounds) {
       await tester.pumpWidget(
         MaterialApp(

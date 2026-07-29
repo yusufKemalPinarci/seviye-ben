@@ -101,4 +101,30 @@ void main() {
 
     expect(find.text('Bu kategoride rutin yok.'), findsOneWidget);
   });
+
+  testWidgets('boş listede Alışkanlık ekle CTA', (tester) async {
+    final notifier = GameNotifier();
+    notifier.debugSetHabits(const []);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          gameProvider.overrideWith((ref) => notifier),
+        ],
+        child: const MaterialApp(
+          home: Scaffold(
+            body: CustomScrollView(
+              slivers: [
+                HabitListSliver(statFilter: null),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.text('Henüz alışkanlık yok.'), findsOneWidget);
+    expect(find.text('Alışkanlık ekle'), findsOneWidget);
+  });
 }
