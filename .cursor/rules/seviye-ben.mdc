@@ -14,8 +14,10 @@ Istatistikler: spor=guc, ders=zeka, uyku=enerji, su=can.
 - Tamamen ofline: internet, hesap, API yok
 - Stack: Flutter + Riverpod (MVVM) + Hive yerel depolama
 - Konum: `seviye_ben/`
-- Ilerleme: `docs/PROGRESS.md` · sprint skill: `.cursor/skills/seviye-ben-sprint/`
+- Ilerleme: `docs/PROGRESS.md` (her sprintte guncelle; yeni chat handoff)
+- Sprint skill: `.cursor/skills/seviye-ben-sprint/`
 - Habitica kopyasi degil; telif: isim/logo/sprite/kod kopyalama yasak
+- Her biten iste `docs/PROGRESS.md` guncellenmeden is bitmis sayilmaz
 
 ## Mimari
 
